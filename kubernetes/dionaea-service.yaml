@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f standard.yml
+    kompose.version: 1.18.0 ()
+  creationTimestamp: null
+  labels:
+    io.kompose.service: dionaea
+  name: dionaea
+spec:
+  ports:
+  - name: "20"
+    port: 20
+    targetPort: 20
+  - name: "21"
+    port: 21
+    targetPort: 21
+  - name: "42"
+    port: 42
+    targetPort: 42
+  - name: "69"
+    port: 69
+    protocol: UDP
+    targetPort: 69
+  - name: "81"
+    port: 81
+    targetPort: 81
+  - name: "135"
+    port: 135
+    targetPort: 135
+  - name: "443"
+    port: 443
+    targetPort: 443
+  - name: "445"
+    port: 445
+    targetPort: 445
+  - name: "1433"
+    port: 1433
+    targetPort: 1433
+  - name: "1723"
+    port: 1723
+    targetPort: 1723
+  - name: "1883"
+    port: 1883
+    targetPort: 1883
+  - name: "3306"
+    port: 3306
+    targetPort: 3306
+  - name: "5060"
+    port: 5060
+    targetPort: 5060
+  - name: 5060-udp
+    port: 5060
+    protocol: UDP
+    targetPort: 5060
+  - name: "5061"
+    port: 5061
+    targetPort: 5061
+  - name: "27017"
+    port: 27017
+    targetPort: 27017
+  selector:
+    io.kompose.service: dionaea
+status:
+  loadBalancer: {}

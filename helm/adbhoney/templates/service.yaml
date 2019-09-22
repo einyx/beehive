@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "adbhoney.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "adbhoney.name" . }}
+    helm.sh/chart: {{ include "adbhoney.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 5555
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: {{ include "adbhoney.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}

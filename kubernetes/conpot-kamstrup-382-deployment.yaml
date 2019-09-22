@@ -1,0 +1,52 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f standard.yml
+    kompose.version: 1.18.0 ()
+  creationTimestamp: null
+  labels:
+    io.kompose.service: conpot-kamstrup-382
+  name: conpot-kamstrup-382
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: conpot-kamstrup-382
+    spec:
+      containers:
+      - env:
+        - name: CONPOT_CONFIG
+          value: /etc/conpot/conpot.cfg
+        - name: CONPOT_JSON_LOG
+          value: /var/log/conpot/conpot_kamstrup_382.json
+        - name: CONPOT_LOG
+          value: /var/log/conpot/conpot_kamstrup_382.log
+        - name: CONPOT_TEMPLATE
+          value: kamstrup_382
+        - name: CONPOT_TMP
+          value: /tmp/conpot
+        image: blackhatch/conpot:master
+        name: conpot_kamstrup_382
+        ports:
+        - containerPort: 1025
+        - containerPort: 50100
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/log/conpot
+          name: conpot-kamstrup-382-claim0
+        - mountPath: /tmp/conpot
+          name: conpot-kamstrup-382-tmpfs0
+      restartPolicy: Always
+      volumes:
+      - name: conpot-kamstrup-382-claim0
+        persistentVolumeClaim:
+          claimName: conpot-kamstrup-382-claim0
+      - emptyDir:
+          medium: Memory
+        name: conpot-kamstrup-382-tmpfs0
+status: {}

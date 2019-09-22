@@ -1,0 +1,49 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f standard.yml
+    kompose.version: 1.18.0 ()
+  creationTimestamp: null
+  labels:
+    io.kompose.service: elasticsearch
+  name: elasticsearch
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: elasticsearch
+    spec:
+      containers:
+      - env:
+        - name: ES_JAVA_OPTS
+          value: -Xms1024m -Xmx1024m
+        - name: ES_TMPDIR
+          value: /tmp
+        - name: bootstrap.memory_lock
+          value: "true"
+        image: blackhatch/elasticsearch:master
+        name: elasticsearch
+        ports:
+        - containerPort: 9200
+          hostIP: 127.0.0.1
+        resources:
+          limits:
+            memory: "4294967296"
+        securityContext:
+          capabilities:
+            add:
+            - IPC_LOCK
+        volumeMounts:
+        - mountPath: /data
+          name: elasticsearch-claim0
+      restartPolicy: Always
+      volumes:
+      - name: elasticsearch-claim0
+        persistentVolumeClaim:
+          claimName: elasticsearch-claim0
+status: {}

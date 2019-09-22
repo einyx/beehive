@@ -1,0 +1,61 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f standard.yml
+    kompose.version: 1.18.0 ()
+  creationTimestamp: null
+  labels:
+    io.kompose.service: cowrie
+  name: cowrie
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: cowrie
+    spec:
+      containers:
+      - image: blackhatch/cowrie
+        name: cowrie
+        ports:
+        - containerPort: 22
+        - containerPort: 23
+        resources: {}
+        volumeMounts:
+        - mountPath: /home/cowrie/cowrie/dl
+          name: cowrie-claim0
+        - mountPath: /home/cowrie/cowrie/etc
+          name: cowrie-claim1
+        - mountPath: /home/cowrie/cowrie/log
+          name: cowrie-claim2
+        - mountPath: /home/cowrie/cowrie/log/tty
+          name: cowrie-claim3
+        - mountPath: /tmp/cowrie
+          name: cowrie-tmpfs0
+        - mountPath: /tmp/cowrie/data
+          name: cowrie-tmpfs1
+      restartPolicy: Always
+      volumes:
+      - name: cowrie-claim0
+        persistentVolumeClaim:
+          claimName: cowrie-claim0
+      - name: cowrie-claim1
+        persistentVolumeClaim:
+          claimName: cowrie-claim1
+      - name: cowrie-claim2
+        persistentVolumeClaim:
+          claimName: cowrie-claim2
+      - name: cowrie-claim3
+        persistentVolumeClaim:
+          claimName: cowrie-claim3
+      - emptyDir:
+          medium: Memory
+        name: cowrie-tmpfs0
+      - emptyDir:
+          medium: Memory
+        name: cowrie-tmpfs1
+status: {}

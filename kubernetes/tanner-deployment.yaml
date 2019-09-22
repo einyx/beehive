@@ -1,0 +1,46 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f standard.yml
+    kompose.version: 1.18.0 ()
+  creationTimestamp: null
+  labels:
+    io.kompose.service: tanner
+  name: tanner
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: tanner
+    spec:
+      containers:
+      - args:
+        - tanner
+        image: blackhatch/tanner:master
+        name: tanner
+        resources: {}
+        tty: true
+        volumeMounts:
+        - mountPath: /var/log/tanner
+          name: tanner-claim0
+        - mountPath: /opt/tanner/files
+          name: tanner-claim1
+        - mountPath: /tmp/tanner
+          name: tanner-tmpfs0
+      restartPolicy: Always
+      volumes:
+      - name: tanner-claim0
+        persistentVolumeClaim:
+          claimName: tanner-claim0
+      - name: tanner-claim1
+        persistentVolumeClaim:
+          claimName: tanner-claim1
+      - emptyDir:
+          medium: Memory
+        name: tanner-tmpfs0
+status: {}

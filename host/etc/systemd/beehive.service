@@ -1,0 +1,47 @@
+[Unit]
+Description=beehive
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+RestartSec=5
+TimeoutSec=infinity
+
+# Get and set internal, external IP infos, but ignore errors
+ExecStartPre=-/opt/beehive/bin/updateip.sh
+
+# Clear state or if persistence is enabled rotate and compress logs from /data
+ExecStartPre=-/bin/bash -c '/opt/beehive/bin/clean.sh on'
+
+# Remove old containers, images and volumes
+ExecStartPre=-/usr/bin/docker-compose -f /opt/beehive/etc/beehive.yml down -v
+ExecStartPre=-/usr/bin/docker-compose -f /opt/beehive/etc/beehive.yml rm -v
+ExecStartPre=-/bin/bash -c 'docker network rm $(docker network ls -q)'
+ExecStartPre=-/bin/bash -c 'docker volume rm $(docker volume ls -q)'
+ExecStartPre=-/bin/bash -c 'docker rm -v $(docker ps -aq)'
+ExecStartPre=-/bin/bash -c 'docker rmi $(docker images | grep "<none>" | awk \'{print $3}\')'
+
+# Get IF, disable offloading, enable promiscious mode for p0f and suricata
+ExecStartPre=-/bin/bash -c '/sbin/ethtool --offload $(/sbin/ip address | grep "^2: " | awk \'{ print $2 }\' | tr -d [:punct:]) rx off tx off'
+ExecStartPre=/bin/bash -c '/sbin/ethtool -K $(/sbin/ip address | grep "^2: " | awk \'{ print $2 }\' | tr -d [:punct:]) gso off gro off'
+ExecStartPre=/bin/bash -c '/sbin/ip link set $(/sbin/ip address | grep "^2: " | awk \'{ print $2 }\' | tr -d [:punct:]) promisc on'
+
+# Modify access rights on docker.sock for netdata
+ExecStartPre=-/bin/chmod 666 /var/run/docker.sock
+
+# Set iptables accept rules to avoid forwarding to honeytrap / NFQUEUE
+# Forward all other connections to honeytrap / NFQUEUE
+ExecStartPre=/opt/beehive/bin/rules.sh /opt/beehive/etc/beehive.yml set
+
+# Compose T-Pot up
+ExecStart=/usr/bin/docker-compose -f /opt/beehive/etc/beehive.yml up --no-color
+
+# Compose T-Pot down, remove containers and volumes
+ExecStop=/usr/bin/docker-compose -f /opt/beehive/etc/beehive.yml down -v
+
+# Remove only previously set iptables rules
+ExecStopPost=/opt/beehive/bin/rules.sh /opt/beehive/etc/beehive.yml unset
+
+[Install]
+WantedBy=multi-user.target

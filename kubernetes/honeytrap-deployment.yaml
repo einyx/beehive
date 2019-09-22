@@ -1,0 +1,52 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f standard.yml
+    kompose.version: 1.18.0 ()
+  creationTimestamp: null
+  labels:
+    io.kompose.service: honeytrap
+  name: honeytrap
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: honeytrap
+    spec:
+      containers:
+      - image: blackhatch/honeytrap:master
+        name: honeytrap
+        resources: {}
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+        volumeMounts:
+        - mountPath: /opt/honeytrap/var/attacks
+          name: honeytrap-claim0
+        - mountPath: /opt/honeytrap/var/downloads
+          name: honeytrap-claim1
+        - mountPath: /opt/honeytrap/var/log
+          name: honeytrap-claim2
+        - mountPath: /tmp/honeytrap
+          name: honeytrap-tmpfs0
+      restartPolicy: Always
+      volumes:
+      - name: honeytrap-claim0
+        persistentVolumeClaim:
+          claimName: honeytrap-claim0
+      - name: honeytrap-claim1
+        persistentVolumeClaim:
+          claimName: honeytrap-claim1
+      - name: honeytrap-claim2
+        persistentVolumeClaim:
+          claimName: honeytrap-claim2
+      - emptyDir:
+          medium: Memory
+        name: honeytrap-tmpfs0
+status: {}

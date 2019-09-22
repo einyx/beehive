@@ -1,0 +1,51 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f standard.yml
+    kompose.version: 1.18.0 ()
+  creationTimestamp: null
+  labels:
+    io.kompose.service: conpot-guardian-ast
+  name: conpot-guardian-ast
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: conpot-guardian-ast
+    spec:
+      containers:
+      - env:
+        - name: CONPOT_CONFIG
+          value: /etc/conpot/conpot.cfg
+        - name: CONPOT_JSON_LOG
+          value: /var/log/conpot/conpot_guardian_ast.json
+        - name: CONPOT_LOG
+          value: /var/log/conpot/conpot_guardian_ast.log
+        - name: CONPOT_TEMPLATE
+          value: guardian_ast
+        - name: CONPOT_TMP
+          value: /tmp/conpot
+        image: blackhatch/conpot:master
+        name: conpot_guardian_ast
+        ports:
+        - containerPort: 10001
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/log/conpot
+          name: conpot-guardian-ast-claim0
+        - mountPath: /tmp/conpot
+          name: conpot-guardian-ast-tmpfs0
+      restartPolicy: Always
+      volumes:
+      - name: conpot-guardian-ast-claim0
+        persistentVolumeClaim:
+          claimName: conpot-guardian-ast-claim0
+      - emptyDir:
+          medium: Memory
+        name: conpot-guardian-ast-tmpfs0
+status: {}

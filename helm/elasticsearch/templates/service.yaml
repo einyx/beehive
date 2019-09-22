@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "elasticsearch.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "elasticsearch.name" . }}
+    helm.sh/chart: {{ include "elasticsearch.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - hostPort: 64298
+      port: 9200
+      targetPort: 9200
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: {{ include "elasticsearch.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}

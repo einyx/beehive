@@ -1,0 +1,45 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f standard.yml
+    kompose.version: 1.18.0 ()
+  creationTimestamp: null
+  labels:
+    io.kompose.service: heralding
+  name: heralding
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: heralding
+    spec:
+      containers:
+      - image: blackhatch/heralding:master
+        name: heralding
+        ports:
+        - containerPort: 110
+        - containerPort: 143
+        - containerPort: 993
+        - containerPort: 995
+        - containerPort: 5432
+        - containerPort: 5900
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/log/heralding
+          name: heralding-claim0
+        - mountPath: /tmp/heralding
+          name: heralding-tmpfs0
+      restartPolicy: Always
+      volumes:
+      - name: heralding-claim0
+        persistentVolumeClaim:
+          claimName: heralding-claim0
+      - emptyDir:
+          medium: Memory
+        name: heralding-tmpfs0
+status: {}

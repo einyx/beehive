@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "ciscoasa.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "ciscoasa.name" . }}
+    helm.sh/chart: {{ include "ciscoasa.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5000
+      targetPort: 5000
+      protocol: UDP
+      name: 5000udp
+    - port: 8443
+      targetPort: 8443
+      protocol: TCP
+      name: 8443tcp
+  selector:
+    app.kubernetes.io/name: {{ include "ciscoasa.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}

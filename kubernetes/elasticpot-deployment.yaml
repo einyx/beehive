@@ -1,0 +1,35 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f standard.yml
+    kompose.version: 1.18.0 ()
+  creationTimestamp: null
+  labels:
+    io.kompose.service: elasticpot
+  name: elasticpot
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: elasticpot
+    spec:
+      containers:
+      - image: blackhatch/elasticpot:master
+        name: elasticpot
+        ports:
+        - containerPort: 9200
+        resources: {}
+        volumeMounts:
+        - mountPath: /opt/ElasticpotPY/log
+          name: elasticpot-claim0
+      restartPolicy: Always
+      volumes:
+      - name: elasticpot-claim0
+        persistentVolumeClaim:
+          claimName: elasticpot-claim0
+status: {}

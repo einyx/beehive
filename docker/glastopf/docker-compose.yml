@@ -1,0 +1,23 @@
+version: '2.3'
+
+networks:
+  glastopf_local:
+
+services:
+
+# Glastopf service
+  glastopf:
+    build: .
+    container_name: glastopf
+    tmpfs:
+      - /tmp/glastopf:uid=2000,gid=2000
+    restart: always
+    networks:
+     - glastopf_local
+    ports:
+     - "80:80"
+    image: "blackhatch/glastopf:1811"
+    read_only: true
+    volumes:
+     - /data/glastopf/db:/tmp/glastopf/db
+     - /data/glastopf/log:/tmp/glastopf/log

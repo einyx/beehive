@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "ciscoasa.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "ciscoasa.name" . }}
+    helm.sh/chart: {{ include "ciscoasa.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "ciscoasa.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "ciscoasa.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      securityContext:
+        fsGroup: 2000
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: udp5000
+              containerPort: 5000
+              protocol: UDP
+            - name: tcp8443
+              containerPort: 8443
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: ciscoasa-logs
+              mountPath: /var/log/ciscoasa
+            - name: tmp-volume
+              mountPath: /tmp/ciscoasa
+      volumes:
+        - name: tmp-volume
+          emptyDir: {}
+        - name: ciscoasa-logs
+          hostPath:
+            path: /data/ciscoasa/log
+            type: Directory
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

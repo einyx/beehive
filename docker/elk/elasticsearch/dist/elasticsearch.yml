@@ -1,0 +1,9 @@
+cluster.name: beehivecluster
+node.name: "beehivecluster-node-01"
+xpack.ml.enabled: false
+path:
+    logs: /data/elk/log
+    data: /data/elk/data
+http.host: 0.0.0.0
+http.cors.enabled: true
+http.cors.allow-origin: "*"

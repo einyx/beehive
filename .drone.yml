@@ -1,0 +1,128 @@
+---
+kind: secret
+name: docker_username
+get:
+  path: docker
+  name: username
+
+---
+kind: secret
+name: docker_password
+get:
+  path: docker
+  name: password
+---
+kind: pipeline
+name: build
+type: docker
+
+steps:
+  - name: publish_adbhoney
+    image: docker:dind
+    privileged: true
+    settings:
+      auto_tag: true
+      auto_tag_suffix: linux-amd64
+      dockerfile: docker/adbhoney/Dockerfile
+      repo: blackhatch/adbhoney
+      cache_from: blackhatch/adbhoney:latest
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+    when:
+      event:
+        - push
+        - tag
+  - name: publish ciscoasa
+    image: docker:dind
+    settings:
+      auto_tag: true
+      auto_tag_suffix: linux-amd64
+      dockerfile: docker/ciscoasa/Dockerfile
+      repo: blackhatch/ciscoasa
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+    when:
+      event:
+        - push
+        - tag
+  - name: publish conpot
+    volumes:
+      - name: dockersock
+        path: /var/run
+    image: docker:dind
+    settings:
+      auto_tag: true
+      auto_tag_suffix: linux-amd64
+      dockerfile: docker/conpot/Dockerfile
+      repo: blackhatch/conpot
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+    when:
+      event:
+        - push
+        - tag
+  - name: publish cowrie
+    volumes:
+      - name: dockersock
+        path: /var/run
+    image: docker:dind
+    settings:
+      auto_tag: true
+      auto_tag_suffix: linux-amd64
+      dockerfile: docker/cowrie/Dockerfile
+      repo: blackhatch/cowrie
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+    when:
+      event:
+        - push
+        - tag
+  - name: publish cyberchef
+    image: docker:dind
+    volumes:
+      - name: dockersock
+        path: /var/run
+    settings:
+      auto_tag: true
+      auto_tag_suffix: linux-amd64
+      dockerfile: docker/cyberchef/Dockerfile
+      repo: blackhatch/cyberchef
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+    when:
+      event:
+        - push
+        - tag
+  - name: publish dionanea
+    image: docker:dind
+    volumes:
+      - name: dockersock
+        path: /var/run/docker.sock
+    settings:
+      auto_tag: true
+      auto_tag_suffix: linux-amd64
+      dockerfile: docker/dionanea/Dockerfile
+      repo: blackhatch/dionanea
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+    when:
+      event:
+        - push
+        - tag
+
+volumes:
+  - name: dockersock
+    host:
+      path: /var/run/docker.sock

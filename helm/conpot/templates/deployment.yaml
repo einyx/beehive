@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "conpot.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "conpot.name" . }}
+    helm.sh/chart: {{ include "conpot.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "conpot.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "conpot.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      securityContext:
+        fsGroup: 2000
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+            - name: 102tcp
+              containerPort: 102
+              protocol: TCP
+            - name: 161tcp
+              containerPort: 161
+              protocol: TCP
+            - name: 502tcp
+              containerPort: 502
+              protocol: TCP
+            - name: 21tcp
+              containerPort: 21
+              protocol: TCP
+            - name: 44ktcp
+              containerPort: 44818
+              protocol: TCP
+            - name: 47ktcp
+              containerPort: 47808
+          volumeMounts:
+            - name: conpot-logs
+              mountPath: /var/log/conpot
+            - name: tmp-volume
+              mountPath: /tmp/conpot
+      volumes:
+        - name: tmp-volume
+          emptyDir: {}
+        - name: conpot-logs
+          hostPath:
+            path: /data/conpot/log
+            type: Directory
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

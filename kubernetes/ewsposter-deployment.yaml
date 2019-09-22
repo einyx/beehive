@@ -1,0 +1,38 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f standard.yml
+    kompose.version: 1.18.0 ()
+  creationTimestamp: null
+  labels:
+    io.kompose.service: ewsposter
+  name: ewsposter
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: ewsposter
+    spec:
+      containers:
+      - image: blackhatch/ewsposter:master
+        name: ewsposter
+        resources: {}
+        volumeMounts:
+        - mountPath: /data
+          name: ewsposter-claim0
+        - mountPath: /opt/ewsposter/ews.ip
+          name: ewsposter-claim1
+      restartPolicy: Always
+      volumes:
+      - name: ewsposter-claim0
+        persistentVolumeClaim:
+          claimName: ewsposter-claim0
+      - name: ewsposter-claim1
+        persistentVolumeClaim:
+          claimName: ewsposter-claim1
+status: {}

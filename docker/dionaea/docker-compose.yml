@@ -1,0 +1,40 @@
+version: '2.3'
+
+services:
+
+# Dionaea service
+  dionaea:
+    build: .
+    container_name: dionaea
+    stdin_open: true
+    tty: true
+    restart: always
+    network_mode: "host"
+    ports:
+     - "20:20"
+     - "21:21"
+     - "42:42"
+     - "69:69/udp"
+     - "81:81"
+     - "135:135"
+     - "443:443"
+     - "445:445"
+     - "1433:1433"
+     - "1723:1723"
+     - "1883:1883"
+     - "3306:3306"
+     - "5060:5060"
+     - "5060:5060/udp"
+     - "5061:5061"
+     - "27017:27017"
+    image: "blackhatch/dionaea:1811"
+    read_only: true
+    volumes:
+     - /data/dionaea/roots/ftp:/opt/dionaea/var/dionaea/roots/ftp
+     - /data/dionaea/roots/tftp:/opt/dionaea/var/dionaea/roots/tftp
+     - /data/dionaea/roots/www:/opt/dionaea/var/dionaea/roots/www
+     - /data/dionaea/roots/upnp:/opt/dionaea/var/dionaea/roots/upnp
+     - /data/dionaea:/opt/dionaea/var/dionaea
+     - /data/dionaea/binaries:/opt/dionaea/var/dionaea/binaries
+     - /data/dionaea/log:/opt/dionaea/var/log
+     - /data/dionaea/rtp:/opt/dionaea/var/dionaea/rtp

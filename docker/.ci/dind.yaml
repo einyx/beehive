@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+labels:
+    app: docker-builder
+spec:
+  containers:
+  - name: docker
+    image: docker:stable-git
+    command:
+    - cat
+    tty: true
+    volumeMounts:
+    - mountPath: /var/run/docker.sock
+      name: docker-sock-volume
+  volumes:
+  - name: docker-sock-volume
+    hostPath:
+      path: /var/run/docker.sock
+      type: File

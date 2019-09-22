@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+
+## Kibana service
+  kibana:
+    build: .
+    container_name: kibana
+    restart: always
+#    depends_on:
+#      elasticsearch:
+#        condition: service_healthy
+    ports:
+     - "65296:5601"
+    image: "blackhatch/kibana:latest"

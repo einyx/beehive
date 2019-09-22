@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f standard.yml
+    kompose.version: 1.18.0 ()
+  creationTimestamp: null
+  labels:
+    io.kompose.service: head
+  name: head
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: head
+    spec:
+      containers:
+      - image: blackhatch/head:master
+        name: head
+        ports:
+        - containerPort: 9100
+          hostIP: 127.0.0.1
+        resources: {}
+      restartPolicy: Always
+status: {}

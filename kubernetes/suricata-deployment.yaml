@@ -1,0 +1,42 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f standard.yml
+    kompose.version: 1.18.0 ()
+  creationTimestamp: null
+  labels:
+    io.kompose.service: suricata
+  name: suricata
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: suricata
+    spec:
+      containers:
+      - env:
+        - name: OINKCODE
+          value: OPEN
+        image: blackhatch/suricata:master
+        name: suricata
+        resources: {}
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+            - SYS_NICE
+            - NET_RAW
+        volumeMounts:
+        - mountPath: /var/log/suricata
+          name: suricata-claim0
+      restartPolicy: Always
+      volumes:
+      - name: suricata-claim0
+        persistentVolumeClaim:
+          claimName: suricata-claim0
+status: {}

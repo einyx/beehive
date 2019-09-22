@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "elasticsearch.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "elasticsearch.name" . }}
+    helm.sh/chart: {{ include "elasticsearch.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "elasticsearch.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "elasticsearch.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 9200
+              hostPort: 64298
+              protocol: TCP
+          env:
+            - name: "bootstrap.memory_lock"
+              value: "true"
+            - name: ES_JAVA_OPTS
+              value: "-Xms1024m -Xmx1024m"
+            - name: ES_TMPDIR
+              value: /tmp
+          volumeMounts:
+          - name: elasticsearch-volume
+            mountPath: /data
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+       - name: elasticsearch-volume
+         hostPath:
+           path: /data
+           type: Directory
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

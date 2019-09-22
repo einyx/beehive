@@ -1,0 +1,79 @@
+version: '2.3'
+networks:
+  elk:
+services:
+
+# ELK services
+## Elasticsearch service
+  elasticsearch:
+    build: elasticsearch/.
+    networks:
+      - elk
+    container_name: elasticsearch
+    restart: always
+    environment:
+     - bootstrap.memory_lock=true
+     - ES_JAVA_OPTS=-Xms1024m -Xmx1024m
+     - ES_TMPDIR=/tmp
+    cap_add:
+     - IPC_LOCK
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    mem_limit: 4g
+    ports:
+     - "9200:9200"
+    image: "blackhatch/elasticsearch:latest"
+    volumes:
+     - /data:/data
+
+## Kibana service
+  kibana:
+    build: kibana/.
+    networks:
+    - elk
+    container_name: kibana
+    restart: always
+    stop_signal: SIGKILL
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    ports:
+     - "64296:5601"
+    image: "blackhatch/kibana:latest"
+
+## Logstash service
+  logstash:
+    build: logstash/.
+    networks:
+    - elk
+    container_name: logstash
+    restart: always
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    env_file:
+     - /opt/beehive/etc/compose/elk_environment
+    image: "blackhatch/logstash:latest"
+    volumes:
+     - /data:/data
+     - /root/beehivece/docker/elk/logstash/dist/logstash.conf:/etc/logstash/conf.d/logstash.conf
+
+## Elasticsearch-head service
+  head:
+    build: head/.
+    container_name: head
+    networks:
+    - elk
+    restart: always
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    ports:
+     - "64302:9100"
+    image: "blackhatch/head:latest"
+    read_only: true

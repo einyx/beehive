@@ -1,0 +1,51 @@
+def project = 'blackhatch'
+def appName = 'ewsposter'
+def imageTag = "${project}/${appName}"
+
+pipeline {
+    options { buildDiscarder(logRotator(numToKeepStr: '2')) }
+    triggers {
+        cron('H * * * *')
+        pollSCM('H/30 * * * *')
+    }
+    agent {
+        kubernetes {
+            label 'docker-builder'
+            defaultContainer 'jnlp:alpine'
+            yamlFile 'docker/.ci/dind.yaml'
+        }
+    }
+    stages {
+        stage('Pre flight check') {
+            steps {
+                container('docker') {
+                sh "docker version"
+                }
+            }
+        }
+
+        stage('Building container') {
+            steps {
+                timeout(time: 30, unit: 'MINUTES') {
+                    retry(5) {
+                        container('docker') {
+                            dir ("docker/${appName}") {
+                                sh "docker build -t ${imageTag}:${BRANCH_NAME} ."
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Pushing image to DockerHub') {
+            steps {
+                container('docker') {
+                    withDockerRegistry([ credentialsId: "docker", url: ""]) {
+                        sh "docker push ${imageTag}:${BRANCH_NAME}"
+                    }
+                }
+            }
+        }
+    }
+}
