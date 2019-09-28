@@ -1,24 +1,24 @@
 FROM alpine
-
+RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/https\:\/\/alpine.global.ssl.fastly.net/g' /etc/apk/repositories
 # Include dist
 ADD dist/ /root/dist/
 
 # Setup env and apt
 RUN apk -U upgrade && \
     apk add build-base \
-            git \
-            libffi \
-            libffi-dev \
-            openssl \
-            openssl-dev \
-            python3 \
-            python3-dev && \
+    git \
+    libffi \
+    libffi-dev \
+    openssl \
+    openssl-dev \
+    python3 \
+    python3-dev && \
 
-# Setup user
+    # Setup user
     addgroup -g 2000 ciscoasa && \
     adduser -S -s /bin/bash -u 2000 -D -g 2000 ciscoasa && \
 
-# Get and install packages
+    # Get and install packages
     mkdir -p /opt/ && \
     cd /opt/ && \
     git clone --depth=1 https://github.com/cymmetria/ciscoasa_honeypot && \
@@ -28,12 +28,12 @@ RUN apk -U upgrade && \
     cp /root/dist/asa_server.py /opt/ciscoasa_honeypot && \
     chown -R ciscoasa:ciscoasa /opt/ciscoasa_honeypot && \
 
-# Clean up
+    # Clean up
     apk del --purge build-base \
-                    git \
-                    libffi-dev \
-                    openssl-dev \
-                    python3-dev && \
+    git \
+    libffi-dev \
+    openssl-dev \
+    python3-dev && \
     rm -rf /root/* && \
     rm -rf /var/cache/apk/*
 
