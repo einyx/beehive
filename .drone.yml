@@ -24,6 +24,7 @@ steps:
       auto_tag: true
       auto_tag_suffix: linux-amd64
       dockerfile: docker/adbhoney/Dockerfile
+      context: docker/adbhoney
       repo: blackhatch/adbhoney
       cache_from: blackhatch/adbhoney:latest
       username:
@@ -40,6 +41,7 @@ steps:
       auto_tag: true
       auto_tag_suffix: linux-amd64
       dockerfile: docker/ciscoasa/Dockerfile
+      context: docker/ciscoasa
       repo: blackhatch/ciscoasa
       username:
         from_secret: docker_username
