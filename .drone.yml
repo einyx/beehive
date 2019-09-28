@@ -20,8 +20,8 @@ steps:
   - name: publish_adbhoney
     image: plugins/docker:17.05
     privileged: true
+    custom_dns: [8.8.8.8]
     settings:
-      custom_dns: 8.8.8.8
       auto_tag: true
       auto_tag_suffix: linux-amd64
       dockerfile: docker/adbhoney/Dockerfile
@@ -37,10 +37,10 @@ steps:
         - push
         - tag
   - name: publish_ciscoasa
+    custom_dns: [8.8.8.8]
     image: plugins/docker:17.05
     privileged: true
     settings:
-      custom_dns: 8.8.8.8
       auto_tag: true
       auto_tag_suffix: linux-amd64
       dockerfile: docker/ciscoasa/Dockerfile
