@@ -34,8 +34,8 @@ steps:
       event:
         - push
         - tag
-  - name: publish ciscoasa
-    image: docker:dind
+  - name: publish_ciscoasa
+    image: plugins/docker:17.05
     settings:
       auto_tag: true
       auto_tag_suffix: linux-amd64
@@ -49,11 +49,11 @@ steps:
       event:
         - push
         - tag
-  - name: publish conpot
+  - name: publish_conpot
     volumes:
       - name: dockersock
         path: /var/run
-    image: docker:dind
+    image: plugins/docker:17.05
     settings:
       auto_tag: true
       auto_tag_suffix: linux-amd64
@@ -67,11 +67,11 @@ steps:
       event:
         - push
         - tag
-  - name: publish cowrie
+  - name: publish_cowrie
     volumes:
       - name: dockersock
         path: /var/run
-    image: docker:dind
+    image: plugins/docker:17.05
     settings:
       auto_tag: true
       auto_tag_suffix: linux-amd64
@@ -85,8 +85,8 @@ steps:
       event:
         - push
         - tag
-  - name: publish cyberchef
-    image: docker:dind
+  - name: publish_cyberchef
+    image: plugins/docker:17.05
     volumes:
       - name: dockersock
         path: /var/run
@@ -103,8 +103,8 @@ steps:
       event:
         - push
         - tag
-  - name: publish dionanea
-    image: docker:dind
+  - name: publish_dionanea
+    image: plugins/docker:17.05
     volumes:
       - name: dockersock
         path: /var/run/docker.sock

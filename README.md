@@ -27,6 +27,8 @@ There is no access control for the Kibana web interface. If you want to run this
 * [snare](http://mushmush.org/),
 * [tanner](http://mushmush.org/)
 
+# Helm Chart Repository 
+
 
 # Local Node Setup
 
