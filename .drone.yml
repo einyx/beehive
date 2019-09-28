@@ -21,6 +21,7 @@ steps:
     image: plugins/docker:17.05
     privileged: true
     settings:
+      custom_dns: 8.8.8.8
       auto_tag: true
       auto_tag_suffix: linux-amd64
       dockerfile: docker/adbhoney/Dockerfile
@@ -39,6 +40,7 @@ steps:
     image: plugins/docker:17.05
     privileged: true
     settings:
+      custom_dns: 8.8.8.8
       auto_tag: true
       auto_tag_suffix: linux-amd64
       dockerfile: docker/ciscoasa/Dockerfile
@@ -100,6 +102,7 @@ steps:
         path: /var/run
     settings:
       auto_tag: true
+
       auto_tag_suffix: linux-amd64
       dockerfile: docker/cyberchef/Dockerfile
       context: docker/cyberchef
