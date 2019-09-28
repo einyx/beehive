@@ -18,7 +18,7 @@ type: docker
 
 steps:
   - name: publish_adbhoney
-    image: plugins/docker:17.05
+    image: plugins/docker
     privileged: true
     network_mode: host
     settings:
@@ -38,7 +38,7 @@ steps:
         - tag
   - name: publish_ciscoasa
     network_mode: host
-    image: plugins/docker:17.05
+    image: plugins/docker
     privileged: true
     settings:
       auto_tag: true
