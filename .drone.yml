@@ -18,7 +18,7 @@ type: docker
 
 steps:
   - name: publish_adbhoney
-    image: plugins/docker
+    image: plugins/docker:18.09-linux-amd64
     privileged: true
     custom_dns: 8.8.8.8
     network_mode: host
@@ -40,7 +40,7 @@ steps:
   - name: publish_ciscoasa
     network_mode: host
     custom_dns: 8.8.8.8
-    image: plugins/docker
+    image: plugins/docker:18.09-linux-amd64
     privileged: true
     settings:
       auto_tag: true
