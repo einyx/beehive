@@ -37,6 +37,7 @@ steps:
         - tag
   - name: publish_ciscoasa
     image: plugins/docker:17.05
+    privileged: true
     settings:
       auto_tag: true
       auto_tag_suffix: linux-amd64
@@ -56,6 +57,7 @@ steps:
       - name: dockersock
         path: /var/run
     image: plugins/docker:17.05
+    privileged: true
     settings:
       auto_tag: true
       auto_tag_suffix: linux-amd64
@@ -75,6 +77,7 @@ steps:
       - name: dockersock
         path: /var/run
     image: plugins/docker:17.05
+    privileged: true
     settings:
       auto_tag: true
       auto_tag_suffix: linux-amd64
@@ -91,6 +94,7 @@ steps:
         - tag
   - name: publish_cyberchef
     image: plugins/docker:17.05
+    privileged: true
     volumes:
       - name: dockersock
         path: /var/run
@@ -109,6 +113,7 @@ steps:
         - push
         - tag
   - name: publish_dionanea
+    privileged: true
     image: plugins/docker:17.05
     volumes:
       - name: dockersock
