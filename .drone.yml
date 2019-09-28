@@ -55,9 +55,7 @@ steps:
         - push
         - tag
   - name: publish_conpot
-    volumes:
-      - name: dockersock
-        path: /var/run
+    network_mode: host
     image: plugins/docker:17.05
     privileged: true
     settings:
@@ -75,9 +73,6 @@ steps:
         - push
         - tag
   - name: publish_cowrie
-    volumes:
-      - name: dockersock
-        path: /var/run
     image: plugins/docker:17.05
     privileged: true
     settings:
