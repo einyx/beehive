@@ -25,8 +25,8 @@ steps:
       auto_tag_suffix: linux-amd64
       dockerfile: docker/adbhoney/Dockerfile
       context: docker/adbhoney
-      repo: blackhatch/adbhoney
-      cache_from: blackhatch/adbhoney:latest
+      repo: beehivesec/adbhoney
+      cache_from: beehivesec/adbhoney:latest
       username:
         from_secret: docker_username
       password:
@@ -42,7 +42,7 @@ steps:
       auto_tag_suffix: linux-amd64
       dockerfile: docker/ciscoasa/Dockerfile
       context: docker/ciscoasa
-      repo: blackhatch/ciscoasa
+      repo: beehivesec/ciscoasa
       username:
         from_secret: docker_username
       password:
@@ -60,7 +60,8 @@ steps:
       auto_tag: true
       auto_tag_suffix: linux-amd64
       dockerfile: docker/conpot/Dockerfile
-      repo: blackhatch/conpot
+      context: docker/conpot
+      repo: beehivesec/conpot
       username:
         from_secret: docker_username
       password:
@@ -78,7 +79,8 @@ steps:
       auto_tag: true
       auto_tag_suffix: linux-amd64
       dockerfile: docker/cowrie/Dockerfile
-      repo: blackhatch/cowrie
+      context: docker/cowrie
+      repo: beehivesec/cowrie
       username:
         from_secret: docker_username
       password:
@@ -96,7 +98,8 @@ steps:
       auto_tag: true
       auto_tag_suffix: linux-amd64
       dockerfile: docker/cyberchef/Dockerfile
-      repo: blackhatch/cyberchef
+      context: docker/cyberchef
+      repo: beehivesec/cyberchef
       username:
         from_secret: docker_username
       password:
@@ -114,7 +117,8 @@ steps:
       auto_tag: true
       auto_tag_suffix: linux-amd64
       dockerfile: docker/dionanea/Dockerfile
-      repo: blackhatch/dionanea
+      context: docker/dionanea
+      repo: beehivesec/dionanea
       username:
         from_secret: docker_username
       password:
