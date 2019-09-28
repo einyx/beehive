@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: blackhatch/ciscoasa
   tag: master
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 nameOverride: ""
 fullnameOverride: ""

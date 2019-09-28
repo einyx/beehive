@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f standard.yml -c
+    kompose.version: 1.18.0 ()
+  creationTimestamp: null
+  labels:
+    app: kibana
+  name: kibana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kibana
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: kibana
+    spec:
+      containers:
+      - image: blackhatch/kibana:unstable
+        imagePullPolicy: Always
+        name: kibana
+        env:
+        - name: SERVER_BASEPATH
+          value: /kibana
+        - name: CONFIG_PATH
+          value: /usr/share/kibana/config/kibana.yml
+        ports:
+        - containerPort: 5601
+        resources: {}
+      restartPolicy: Always
+status: {}

@@ -6,8 +6,8 @@ replicaCount: 1
 
 image:
   repository: blackhatch/elasticsearch
-  tag: master
-  pullPolicy: IfNotPresent
+  tag: unstable
+  pullPolicy: Always
 
 nameOverride: ""
 fullnameOverride: ""

@@ -8,16 +8,18 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
     - port: 5000
       targetPort: 5000
       protocol: UDP
+      nodePort: 5000
       name: 5000udp
     - port: 8443
       targetPort: 8443
       protocol: TCP
       name: 8443tcp
+      nodePort: 8443
   selector:
     app.kubernetes.io/name: {{ include "ciscoasa.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}

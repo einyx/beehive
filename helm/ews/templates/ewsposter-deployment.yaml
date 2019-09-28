@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
@@ -6,33 +6,37 @@ metadata:
     kompose.version: 1.18.0 ()
   creationTimestamp: null
   labels:
-    io.kompose.service: ewsposter
+    app: ewsposter
   name: ewsposter
 spec:
   replicas: 1
   strategy:
     type: Recreate
+  selector:
+    matchLabels:
+      app: ewsposter
   template:
     metadata:
       creationTimestamp: null
       labels:
-        io.kompose.service: ewsposter
+        app: ewsposter
     spec:
       containers:
       - image: blackhatch/ewsposter:master
         name: ewsposter
         resources: {}
         volumeMounts:
-        - mountPath: /data
-          name: ewsposter-claim0
         - mountPath: /opt/ewsposter/ews.ip
-          name: ewsposter-claim1
+          name: ewsposter-ews
+        - name: ciscoasa-logs
+          mountPath: /var/log/ciscoasa
       restartPolicy: Always
       volumes:
-      - name: ewsposter-claim0
+      - name: ciscoasa-logs
+        hostPath:
+          path: /data/ciscoasa/log
+          type: Directory
+      - name: ewsposter-ews
         persistentVolumeClaim:
-          claimName: ewsposter-claim0
-      - name: ewsposter-claim1
-        persistentVolumeClaim:
-          claimName: ewsposter-claim1
+          claimName: ewsposter-ews
 status: {}

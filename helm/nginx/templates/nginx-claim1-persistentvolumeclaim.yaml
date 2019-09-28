@@ -3,11 +3,11 @@ kind: PersistentVolumeClaim
 metadata:
   creationTimestamp: null
   labels:
-    io.kompose.service: ewsposter-claim1
-  name: ewsposter-claim1
+    io.kompose.service: nginx-claim1
+  name: nginx-claim1
 spec:
   accessModes:
-  - ReadWriteOnce
+  - ReadOnlyMany
   resources:
     requests:
       storage: 100Mi
