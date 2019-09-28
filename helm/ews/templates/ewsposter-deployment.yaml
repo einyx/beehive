@@ -28,13 +28,13 @@ spec:
         volumeMounts:
         - mountPath: /opt/ewsposter/ews.ip
           name: ewsposter-ews
-        - name: ciscoasa-logs
-          mountPath: /var/log/ciscoasa
+        - name: logs
+          mountPath: /data
       restartPolicy: Always
       volumes:
-      - name: ciscoasa-logs
+      - name: logs
         hostPath:
-          path: /data/ciscoasa/log
+          path: /data/
           type: Directory
       - name: ewsposter-ews
         persistentVolumeClaim:

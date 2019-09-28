@@ -18,7 +18,7 @@ type: docker
 
 steps:
   - name: publish_adbhoney
-    image: docker:dind
+    image: plugins/docker:17.05
     privileged: true
     settings:
       auto_tag: true
