@@ -46,6 +46,7 @@ steps:
       dockerfile: docker/ciscoasa/Dockerfile
       context: docker/ciscoasa
       repo: beehivesec/ciscoasa
+      cache_from: beehivesec/ciscoasa:latest
       username:
         from_secret: docker_username
       password:
