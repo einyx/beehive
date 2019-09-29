@@ -40,14 +40,14 @@ RUN apk -U add \
     sed -i 's/port="16100"/port="161"/' /opt/conpot/conpot/templates/IEC104/snmp/snmp.xml && \ 
     sed -i 's/port="6230"/port="623"/' /opt/conpot/conpot/templates/ipmi/ipmi/ipmi.xml && \ 
     pip3 install --no-cache-dir -U pip setuptools && \
-    pip3 install --no-cache-dir . && \
-    cd / && \
+    pip3 install --no-cache-dir .
+RUN cd / && \
     rm -rf /opt/conpot /tmp/* /var/tmp/* && \
     # Get wireshark manuf db for scapy, setup configs, user, groups
-    mkdir -p /etc/conpot /var/log/conpot /usr/share/wireshark && \
-    wget https://github.com/wireshark/wireshark/raw/master/manuf -o /usr/share/wireshark/manuf && \
+    mkdir -p /etc/conpot /var/log/conpot /usr/share/wireshark
+RUN wget https://github.com/wireshark/wireshark/raw/master/manuf -o /usr/share/wireshark/manuf && \
     cp /root/dist/conpot.cfg /etc/conpot/conpot.cfg && \
-    cp -R /root/dist/templates /usr/lib/python3.7/site-packages/conpot/ && \
+    cp -R /root/dist/templates /usr/lib/python3.6/site-packages/conpot/ && \
     addgroup -g 2000 conpot && \
     adduser -S -s /bin/ash -u 2000 -D -g 2000 conpot && \
     # Clean up
