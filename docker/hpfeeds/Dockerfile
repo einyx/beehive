@@ -24,7 +24,7 @@ RUN apk -U --no-cache add \
     git clone https://github.com/rep/hpfeeds /opt/hpfeeds && \
     cd /opt/hpfeeds/hpfeeds/broker && \
     cp /root/dist/adduser.sql . && \
-    cd /opt/hpfeeds/hpfeeds/broker/scripts && timeout 5 python broker.py || : && \
+    cd /opt/hpfeeds/hpfeeds/scripts && timeout 5 python broker.py || : && \
     sqlite3 db.sqlite3 < adduser.sql
 #python setup.py build && \
 #python setup.py install && \
