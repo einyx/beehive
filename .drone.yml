@@ -20,6 +20,7 @@ steps:
   - name: publish_adbhoney
     image: plugins/docker
     privileged: true
+    network_mode: host
     custom_dns: [8.8.8.8, 9.9.9.9]
     settings:
       auto_tag: true
@@ -37,6 +38,7 @@ steps:
         - push
         - tag
   - name: publish_ciscoasa
+    network_mode: host
     custom_dns: [8.8.8.8, 9.9.9.9]
     image: plugins/docker
     privileged: true
