@@ -32,7 +32,7 @@ RUN apk -U --no-cache add \
     adduser -S -H -s /bin/ash -u 2000 -D -g 2000 heralding && \
     mkdir -p /var/log/heralding/ /etc/heralding && \
     mv /root/dist/heralding.yml /etc/heralding/ && \
-    setcap cap_net_bind_service=+ep /usr/bin/python3.6 && \
+    setcap cap_net_bind_service=+ep /usr/bin/python3.7 && \
     chown -R heralding:heralding /var/log/heralding && \
 
     # Clean up

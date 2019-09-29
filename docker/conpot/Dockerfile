@@ -49,7 +49,7 @@ RUN cd / && \
     mkdir -p /etc/conpot /var/log/conpot /usr/share/wireshark
 RUN wget https://github.com/wireshark/wireshark/raw/master/manuf -O /usr/share/wireshark/manuf
 RUN cp /root/dist/conpot.cfg /etc/conpot/conpot.cfg
-RUN sleep 60 && cp -R /root/dist/templates /usr/lib/python3.6/site-packages/conpot/ && \
+RUN sleep 60 && cp -R /root/dist/templates /usr/lib/python3.7/site-packages/conpot/ && \
     addgroup -g 2000 conpot && \
     adduser -S -s /bin/ash -u 2000 -D -g 2000 conpot && \
     # Clean up
