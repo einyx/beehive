@@ -40,7 +40,7 @@ RUN apk -U add \
     sed -i 's/port="16100"/port="161"/' /opt/conpot/conpot/templates/IEC104/snmp/snmp.xml && \ 
     sed -i 's/port="6230"/port="623"/' /opt/conpot/conpot/templates/ipmi/ipmi/ipmi.xml && \ 
     pip3 install --no-cache-dir -U pip setuptools && \
-    pip3 install --no-cache-dir . && \
+    pip3 install --no-cache-dir --target  /usr/lib/python3.6/site-packages/conpot . && \
     cd / && \
     rm -rf /opt/conpot /tmp/* /var/tmp/* && \
     # Get wireshark manuf db for scapy, setup configs, user, groups
