@@ -118,7 +118,7 @@ steps:
       event:
         - push
         - tag
-  - name: publish_dionanea
+  - name: publish_dionaea
     network_mode: host
     custom_dns: [8.8.8.8, 9.9.9.9]
     image: plugins/docker
@@ -126,10 +126,10 @@ steps:
     settings:
       auto_tag: true
       auto_tag_suffix: linux-amd64
-      dockerfile: docker/dionanea/Dockerfile
-      context: docker/dionanea
-      repo: beehivesec/dionanea
-      cache_from: beehivesec/dionanea:linux-amd64
+      dockerfile: docker/dionaea/Dockerfile
+      context: docker/dionaea
+      repo: beehivesec/dionaea
+      cache_from: beehivesec/dionaea:linux-amd64
       username:
         from_secret: docker_username
       password:
