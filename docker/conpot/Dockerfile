@@ -14,6 +14,8 @@ RUN apk -U add \
     libtool \
     libcap \
     libxslt \
+    libffi \
+    libffi-dev \
     libxslt-dev \
     mariadb-dev \
     pkgconfig \
