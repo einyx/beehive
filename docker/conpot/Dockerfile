@@ -43,8 +43,6 @@ RUN apk -U add \
     pip3 install --no-cache-dir . && \
     cd / && \
     rm -rf /opt/conpot /tmp/* /var/tmp/* && \
-    setcap cap_net_bind_service=+ep /usr/bin/python3.6 && \
-
     # Get wireshark manuf db for scapy, setup configs, user, groups
     mkdir -p /etc/conpot /var/log/conpot /usr/share/wireshark && \
     wget https://github.com/wireshark/wireshark/raw/master/manuf -o /usr/share/wireshark/manuf && \
