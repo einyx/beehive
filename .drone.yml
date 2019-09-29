@@ -57,3 +57,23 @@ steps:
       event:
         - push
         - tag
+  - name: publish_conpot
+    network_mode: host
+    custom_dns: [8.8.8.8, 9.9.9.9]
+    image: plugins/docker
+    privileged: true
+    settings:
+      auto_tag: true
+      auto_tag_suffix: linux-amd64
+      dockerfile: docker/conpot/Dockerfile
+      context: docker/conpot
+      repo: beehivesec/conpot
+      cache_from: beehivesec/conpot:latest
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+    when:
+      event:
+        - push
+        - tag
