@@ -57,7 +57,7 @@ steps:
       event:
         - push
         - tag
-  - name: publish_conpot
+    - name: publish_conpot
     network_mode: host
     custom_dns: [8.8.8.8, 9.9.9.9]
     image: plugins/docker
