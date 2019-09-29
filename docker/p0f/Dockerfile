@@ -1,31 +1,33 @@
-FROM alpine
+FROM alpine 
+
+RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/http\:\/\/mirror.clarkson.edu/g' /etc/apk/repositories
 
 # Add source
 ADD . /opt/p0f
 
 # Install packages
 RUN apk -U --no-cache add \
-                       bash \
-                       build-base \
-                       jansson \
-                       jansson-dev \
-                       libcap \
-                       libpcap \
-                       libpcap-dev && \
+    bash \
+    build-base \
+    jansson \
+    jansson-dev \
+    libcap \
+    libpcap \
+    libpcap-dev && \
 
-# Setup user, groups and configs
+    # Setup user, groups and configs
     addgroup -g 2000 p0f && \
     adduser -S -s /bin/bash -u 2000 -D -g 2000 p0f && \
 
-# Download and compile p0f
+    # Download and compile p0f
     cd /opt/p0f && \
     ./build.sh && \
     setcap cap_sys_chroot,cap_setgid,cap_net_raw=+ep /opt/p0f/p0f && \
 
-# Clean up
+    # Clean up
     apk del --purge build-base \
-                    jansson-dev \
-                    libpcap-dev && \
+    jansson-dev \
+    libpcap-dev && \
     rm -rf /root/* && \
     rm -rf /var/cache/apk/*
 

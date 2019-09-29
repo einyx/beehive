@@ -1,4 +1,6 @@
-FROM alpine
+FROM alpine 
+
+RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/http\:\/\/mirror.clarkson.edu/g' /etc/apk/repositories
 
 # Include dist
 ADD dist/ /root/dist/
@@ -6,57 +8,57 @@ ADD dist/ /root/dist/
 # Install packages
 RUN sed -i 's/dl-cdn/dl-2/g' /etc/apk/repositories && \
     apk -U --no-cache add \
-                ca-certificates \
-                curl \
-                file \
-                geoip \
-                hiredis \
-                jansson \
-                libcap-ng \
-                libhtp \
-                libmagic \
-                libnet \
-                libnetfilter_queue \
-                libnfnetlink \
-                libpcap \
-                luajit \
-                lz4-libs \
-                musl \
-                nspr \
-                nss \
-                pcre \
-                yaml \
-                wget \
-                automake \
-                autoconf \
-                build-base \
-                cargo \
-                file-dev \
-                geoip-dev \
-                hiredis-dev \
-                jansson-dev \
-                libtool \
-                libhtp-dev \
-                libcap-ng-dev \
-                luajit-dev \
-                libpcap-dev \
-                libnet-dev \
-                libnetfilter_queue-dev \
-                libnfnetlink-dev \
-                lz4-dev \
-                nss-dev \
-                nspr-dev \
-                pcre-dev \
-                python2 \
-                py2-pip \
-                rust \
-                yaml-dev && \
+    ca-certificates \
+    curl \
+    file \
+    geoip \
+    hiredis \
+    jansson \
+    libcap-ng \
+    libhtp \
+    libmagic \
+    libnet \
+    libnetfilter_queue \
+    libnfnetlink \
+    libpcap \
+    luajit \
+    lz4-libs \
+    musl \
+    nspr \
+    nss \
+    pcre \
+    yaml \
+    wget \
+    automake \
+    autoconf \
+    build-base \
+    cargo \
+    file-dev \
+    geoip-dev \
+    hiredis-dev \
+    jansson-dev \
+    libtool \
+    libhtp-dev \
+    libcap-ng-dev \
+    luajit-dev \
+    libpcap-dev \
+    libnet-dev \
+    libnetfilter_queue-dev \
+    libnfnetlink-dev \
+    lz4-dev \
+    nss-dev \
+    nspr-dev \
+    pcre-dev \
+    python2 \
+    py2-pip \
+    rust \
+    yaml-dev && \
 
-# Upgrade pip, install virtualenv
+    # Upgrade pip, install virtualenv
     pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir suricata-update && \
 
-# Get and build Suricata
+    # Get and build Suricata
     mkdir -p /opt/builder/ && \
     wget https://www.openinfosecfoundation.org/download/suricata-4.1.3.tar.gz && \
     tar xvfz suricata-4.1.3.tar.gz --strip-components=1 -C /opt/builder/ && \
@@ -69,7 +71,7 @@ RUN sed -i 's/dl-cdn/dl-2/g' /etc/apk/repositories && \
     --localstatedir=/var \
     --enable-non-bundled-htp \
     --enable-nfqueue \
-        --enable-rust \
+    --enable-rust \
     --disable-gccmarch-native \
     --enable-hiredis \
     --enable-geoip \
@@ -81,7 +83,7 @@ RUN sed -i 's/dl-cdn/dl-2/g' /etc/apk/repositories && \
     make install && \
     make install-full && \
 
-# Setup user, groups and configs
+    # Setup user, groups and configs
     addgroup -g 2000 suri && \
     adduser -S -H -u 2000 -D -g 2000 suri && \
     chmod 644 /etc/suricata/*.config && \
@@ -90,37 +92,37 @@ RUN sed -i 's/dl-cdn/dl-2/g' /etc/apk/repositories && \
     mkdir -p /etc/suricata/rules && \
     cp /opt/builder/rules/* /etc/suricata/rules/ && \
 
-# Download the latest EmergingThreats ruleset, replace rulebase and enable all rules
+    # Download the latest EmergingThreats ruleset, replace rulebase and enable all rules
     cp /root/dist/update.sh /usr/bin/ && \
     chmod 755 /usr/bin/update.sh && \
     update.sh OPEN && \
 
-# Clean up
+    # Clean up
     apk del --purge \
-                automake \
-                autoconf \
-                build-base \
-                cargo \
-                file-dev \
-                geoip-dev \
-                hiredis-dev \
-                jansson-dev \
-                libtool \
-                libhtp-dev \
-                libcap-ng-dev \
-                luajit-dev \
-                libpcap-dev \
-                libnet-dev \
-                libnetfilter_queue-dev \
-                libnfnetlink-dev \
-                lz4-dev \
-                nss-dev \
-                nspr-dev \
-                pcre-dev \
-                python2 \
-                py2-pip \
-                rust \
-                yaml-dev && \
+    automake \
+    autoconf \
+    build-base \
+    cargo \
+    file-dev \
+    geoip-dev \
+    hiredis-dev \
+    jansson-dev \
+    libtool \
+    libhtp-dev \
+    libcap-ng-dev \
+    luajit-dev \
+    libpcap-dev \
+    libnet-dev \
+    libnetfilter_queue-dev \
+    libnfnetlink-dev \
+    lz4-dev \
+    nss-dev \
+    nspr-dev \
+    pcre-dev \
+    python2 \
+    py2-pip \
+    rust \
+    yaml-dev && \
     rm -rf /opt/builder && \
     rm -rf /root/* && \
     rm -rf /var/cache/apk/*

@@ -1,13 +1,15 @@
-FROM alpine
+FROM alpine 
+
+RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/http\:\/\/mirror.clarkson.edu/g' /etc/apk/repositories
 
 # Setup apk
 RUN apk -U --no-cache add \
-                   build-base \
-                   git \
-                   go \
-                   g++ && \
+    build-base \
+    git \
+    go \
+    g++ && \
 
-# Setup go, build medpot
+    # Setup go, build medpot
     export GOPATH=/opt/go/ && \
     mkdir -p /opt/go/src && \
     cd /opt/go/src && \
@@ -19,25 +21,25 @@ RUN apk -U --no-cache add \
     cd medpot && \
     go build medpot && \
 
-# Setup medpot
+    # Setup medpot
     mkdir -p /opt/medpot \
-             /var/log/medpot && \
+    /var/log/medpot && \
     cp medpot /opt/medpot && \
     cp /opt/go/src/medpot/template/*.xml /opt/medpot/ && \
 
-# Setup user, groups and configs
+    # Setup user, groups and configs
     addgroup -g 2000 medpot && \
     adduser -S -s /bin/ash -u 2000 -D -g 2000 medpot && \
     chown -R medpot:medpot /var/log/medpot && \
 
-# Clean up
+    # Clean up
     apk del --purge build-base \
-                    git \
-                    go \
-                    g++ && \
+    git \
+    go \
+    g++ && \
     rm -rf /var/cache/apk/* \
-           /opt/go \
-           /root/dist
+    /opt/go \
+    /root/dist
 
 # Start medpot
 WORKDIR /opt/medpot

@@ -1,17 +1,19 @@
-FROM alpine
+FROM alpine 
+
+RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/http\:\/\/mirror.clarkson.edu/g' /etc/apk/repositories
 
 # Include dist
 ADD dist/ /root/dist/
 
 # Setup apt
 RUN apk -U --no-cache add \
-               build-base \
-               git \
-               linux-headers \
-               python3 \
-               python3-dev && \ 
+    build-base \
+    git \
+    linux-headers \
+    python3 \
+    python3-dev && \ 
 
-# Setup Snare 
+    # Setup Snare 
     git clone --depth=1 https://github.com/mushorg/snare /opt/snare && \
     cd /opt/snare/ && \
     pip3 install --no-cache-dir --upgrade pip setuptools && \
@@ -21,12 +23,12 @@ RUN apk -U --no-cache add \
     rm -rf /opt/snare && \
     clone --target http://example.com && \
     mv /root/dist/pages/* /opt/snare/pages/ && \
-    
-# Clean up
+
+    # Clean up
     apk del --purge \
-            build-base \
-            linux-headers \
-            python3-dev && \
+    build-base \
+    linux-headers \
+    python3-dev && \
     rm -rf /root/* && \
     rm -rf /tmp/* /var/tmp/* && \
     rm -rf /var/cache/apk/*

@@ -1,28 +1,30 @@
-FROM alpine
+FROM alpine 
+
+RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/http\:\/\/mirror.clarkson.edu/g' /etc/apk/repositories
 
 # Include dist
 ADD dist/ /root/dist/
 
 # Install packages
 RUN apk -U --no-cache add \
-             git \
-             python3 && \
+    git \
+    python3 && \
     pip3 install --no-cache-dir --upgrade pip && \
     pip3 install --no-cache-dir bottle \
-                                configparser \
-                                datetime \
-                                requests && \
+    configparser \
+    datetime \
+    requests && \
     mkdir -p /opt && \
     cd /opt/ && \
     git clone --depth=1 https://github.com/schmalle/ElasticpotPY.git && \
 
-# Setup user, groups and configs
+    # Setup user, groups and configs
     addgroup -g 2000 elasticpot && \
     adduser -S -H -s /bin/ash -u 2000 -D -g 2000 elasticpot && \
     mv /root/dist/elasticpot.cfg /opt/ElasticpotPY/ && \
     mkdir /opt/ElasticpotPY/log && \
 
-# Clean up
+    # Clean up
     apk del --purge git && \
     rm -rf /root/* && \
     rm -rf /var/cache/apk/*

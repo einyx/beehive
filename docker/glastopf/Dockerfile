@@ -1,44 +1,46 @@
-FROM alpine
+FROM alpine 
+
+RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/http\:\/\/mirror.clarkson.edu/g' /etc/apk/repositories
 
 # Include dist
 ADD dist/ /root/dist/
 
 # Install packages
 RUN apk -U --no-cache add \
-               autoconf \
-               bind-tools \
-               build-base \
-               git \
-               libffi \
-               libffi-dev \
-               libcap \
-               libxslt-dev \
-               make \
-               openssl-dev \
-               php7 \
-               php7-dev \
-               py-mysqldb \
-               py-openssl \
-               py-pip \
-               py-setuptools \
-               python \
-               python-dev && \
- #   pip install --no-cache-dir pip && \
+    autoconf \
+    bind-tools \
+    build-base \
+    git \
+    libffi \
+    libffi-dev \
+    libcap \
+    libxslt-dev \
+    make \
+    openssl-dev \
+    php7 \
+    php7-dev \
+    py-mysqldb \
+    py-openssl \
+    py-pip \
+    py-setuptools \
+    python \
+    python-dev && \
+    #   pip install --no-cache-dir pip && \
 
-# Install php sandbox from git
+    # Install php sandbox from git
     git clone --depth=1 https://github.com/mushorg/BFR /opt/BFR && \
     cd /opt/BFR && \
     phpize7 && \
     ./configure \
-      --with-php-config=/usr/bin/php-config7 \
-      --enable-bfr && \
+    --with-php-config=/usr/bin/php-config7 \
+    --enable-bfr && \
     make && \
     make install && \
     cd / && \
     rm -rf /opt/BFR /tmp/* /var/tmp/* && \
     echo "zend_extension = "$(find /usr -name bfr.so) >> /etc/php7/php.ini && \
 
-# Install glastopf from git
+    # Install glastopf from git
     git clone --depth=1 https://github.com/mushorg/glastopf.git /opt/glastopf && \
     cd /opt/glastopf && \
     cp /root/dist/requirements.txt . && \
@@ -47,21 +49,21 @@ RUN apk -U --no-cache add \
     rm -rf /opt/glastopf /tmp/* /var/tmp/* && \
     setcap cap_net_bind_service=+ep /usr/bin/python2.7 && \
 
-# Setup user, groups and configs
+    # Setup user, groups and configs
     addgroup -g 2000 glastopf && \
     adduser -S -H -u 2000 -D -g 2000 glastopf && \
     mkdir -p /etc/glastopf && \
     mv /root/dist/glastopf.cfg /etc/glastopf/ && \
 
-# Clean up
+    # Clean up
     apk del --purge autoconf \
-                    build-base \
-                    file \
-                    git \
-                    libffi-dev \
-                    php7-dev \
-                    python-dev \
-                    py-pip && \
+    build-base \
+    file \
+    git \
+    libffi-dev \
+    php7-dev \
+    python-dev \
+    py-pip && \
     rm -rf /root/* && \
     rm -rf /var/cache/apk/*
 

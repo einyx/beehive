@@ -1,21 +1,23 @@
-FROM alpine
+FROM alpine 
+
+RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/http\:\/\/mirror.clarkson.edu/g' /etc/apk/repositories
 
 # Include dist
 ADD dist/ /root/dist/
 
 # Setup apt
 RUN apk -U --no-cache add \
-               build-base \
-               git \
-               libcap \
-               libffi-dev \
-               libressl-dev \
-               linux-headers \
-               py3-yarl \
-               python3 \
-               python3-dev && \ 
+    build-base \
+    git \
+    libcap \
+    libffi-dev \
+    libressl-dev \
+    linux-headers \
+    py3-yarl \
+    python3 \
+    python3-dev && \ 
 
-# Setup Tanner
+    # Setup Tanner
     git clone --depth=1 https://github.com/mushorg/tanner /opt/tanner && \
     cp /root/dist/config.py /opt/tanner/tanner/ && \
     cd /opt/tanner/ && \
@@ -23,34 +25,34 @@ RUN apk -U --no-cache add \
     pip3 install --no-cache-dir -r requirements.txt && \
     python3 setup.py install && \
     rm -rf .coveragerc \
-           .git \
-           .gitignore \
-           .travis.yml \
-           Tanner.egg-info \
-           build \
-           dist \
-           docker \
-           docs \
-           requirements.txt \
-           setup.py \
-           tanner/data && \
+    .git \
+    .gitignore \
+    .travis.yml \
+    Tanner.egg-info \
+    build \
+    dist \
+    docker \
+    docs \
+    requirements.txt \
+    setup.py \
+    tanner/data && \
     cd / && \
-    
-# Setup configs, user, groups
+
+    # Setup configs, user, groups
     addgroup -g 2000 tanner && \
     adduser -S -s /bin/ash -u 2000 -D -g 2000 tanner && \
     mkdir /var/log/tanner && \
     chown -R tanner:tanner /opt/tanner /var/log/tanner && \
 
-# Clean up
+    # Clean up
     apk del --purge \
-            build-base \
-            git \
-            libcap \
-            libffi-dev \
-            libressl-dev \
-            linux-headers \
-            python3-dev && \
+    build-base \
+    git \
+    libcap \
+    libffi-dev \
+    libressl-dev \
+    linux-headers \
+    python3-dev && \
     rm -rf /root/* && \
     rm -rf /tmp/* /var/tmp/* && \
     rm -rf /var/cache/apk/*

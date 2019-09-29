@@ -1,18 +1,20 @@
 FROM alpine 
 
+RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/http\:\/\/mirror.clarkson.edu/g' /etc/apk/repositories 
+
 # Install packages
 RUN apk -U --no-cache add \
-            autoconf \
-            automake \
-            build-base \
-            git \
-            libcap \
-            libtool \
-            py-pip \
-            python \
-            python-dev && \
+    autoconf \
+    automake \
+    build-base \
+    git \
+    libcap \
+    libtool \
+    py-pip \
+    python \
+    python-dev && \
 
-# Install libemu    
+    # Install libemu    
     git clone --depth=1 https://github.com/buffer/libemu /root/libemu/ && \
     cd /root/libemu/ && \
     autoreconf -vi && \
@@ -20,28 +22,28 @@ RUN apk -U --no-cache add \
     make && \
     make install && \
 
-# Install libemu python wrapper
+    # Install libemu python wrapper
     pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir \ 
-                        hpfeeds \
-                        pylibemu && \ 
+    hpfeeds \
+    pylibemu && \ 
 
-# Install mailoney from git
+    # Install mailoney from git
     git clone --depth=1 https://github.com/awhitehatter/mailoney /opt/mailoney && \
 
-# Setup user, groups and configs
+    # Setup user, groups and configs
     addgroup -g 2000 mailoney && \
     adduser -S -H -s /bin/ash -u 2000 -D -g 2000 mailoney && \
     chown -R mailoney:mailoney /opt/mailoney && \
     setcap cap_net_bind_service=+ep /usr/bin/python2.7 && \
 
-# Clean up
+    # Clean up
     apk del --purge autoconf \
-                    automake \
-                    build-base \
-                    git \
-                    py-pip \
-                    python-dev && \
+    automake \
+    build-base \
+    git \
+    py-pip \
+    python-dev && \
     rm -rf /root/* && \
     rm -rf /var/cache/apk/*
 

@@ -1,4 +1,6 @@
-FROM alpine
+FROM alpine 
+
+RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/http\:\/\/mirror.clarkson.edu/g' /etc/apk/repositories
 
 LABEL NAME=beehive \
     Version=edge
@@ -8,15 +10,15 @@ ADD dist/ /root/dist/
 
 # Install packages
 RUN apk -U --no-cache add \
-               build-base \
-               file \
-               git \
-               make \
-               php7 \
-               php7-dev \
-               python3 \
-               python3-dev \
-               re2c && \
+    build-base \
+    file \
+    git \
+    make \
+    php7 \
+    php7-dev \
+    python3 \
+    python3-dev \
+    re2c && \
     pip3 install --no-cache-dir --upgrade pip
 
 # Install bfr sandbox from git
@@ -24,8 +26,8 @@ RUN git clone --depth=1 https://github.com/mushorg/BFR /opt/BFR && \
     cd /opt/BFR && \
     phpize7 && \
     ./configure \
-      --with-php-config=/usr/bin/php-config7 \
-      --enable-bfr && \
+    --with-php-config=/usr/bin/php-config7 \
+    --enable-bfr && \
     make && \
     make install && \
     cd / && \
@@ -39,9 +41,9 @@ RUN git clone --depth=1 https://github.com/mushorg/phpox /opt/phpox && \
     pip3 install -r requirements.txt && \
     make && \
     apk del --purge build-base \
-                    git \
-                    php7-dev \
-                    python3-dev && \
+    git \
+    php7-dev \
+    python3-dev && \
     rm -rf /root/* && \
     rm -rf /var/cache/apk/*
 

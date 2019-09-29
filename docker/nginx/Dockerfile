@@ -1,4 +1,6 @@
-FROM alpine:3.9
+FROM alpine 
+
+RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/http\:\/\/mirror.clarkson.edu/g' /etc/apk/repositories:3.9
 
 LABEL Name=nginx \
     Version=edge

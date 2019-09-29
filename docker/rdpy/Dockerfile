@@ -1,57 +1,59 @@
-FROM alpine
+FROM alpine 
+
+RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/http\:\/\/mirror.clarkson.edu/g' /etc/apk/repositories
 
 # Include dist
 ADD dist/ /root/dist/
 
 # Get and install dependencies & packages
 RUN apk -U --no-cache add \
-            build-base \
-            git \
-            libffi-dev \
-            openssl \
-            openssl-dev \
-            python \
-            python-dev \
-            py-pip \
-            py-setuptools && \
+    build-base \
+    git \
+    libffi-dev \
+    openssl \
+    openssl-dev \
+    python \
+    python-dev \
+    py-pip \
+    py-setuptools && \
     apk -U --no-cache add --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ \
-            py-qt && \
+    py-qt && \
 
-# Setup user
+    # Setup user
     addgroup -g 2000 rdpy && \
     adduser -S -s /bin/ash -u 2000 -D -g 2000 rdpy && \
 
-# Install deps 
+    # Install deps 
     pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir --upgrade cffi && \
     pip install --no-cache-dir \
-                hpfeeds \
-                twisted \
-                pyopenssl \
-                qt4reactor \
-                service_identity \
-                rsa \
-                pyasn1
+    hpfeeds \
+    twisted \
+    pyopenssl \
+    qt4reactor \
+    service_identity \
+    rsa \
+    pyasn1
 
 RUN cd /opt && \
     git clone --depth=1 https://github.com/t3chn0m4g3/rdpy && \
     cd rdpy && \
     python setup.py install && \
 
-# Setup user, groups and configs
+    # Setup user, groups and configs
     cp /root/dist/* /opt/rdpy/ && \
     chown rdpy:rdpy -R /opt/rdpy/* && \
     mkdir -p /var/log/rdpy && \
 
-# Clean up
+    # Clean up
     rm -rf /root/* && \
     apk del --purge build-base \
-                    git \
-                    libffi-dev \
-                    openssl-dev \
-                    python-dev \
-                    py-pip \
-                    py-qt && \
+    git \
+    libffi-dev \
+    openssl-dev \
+    python-dev \
+    py-pip \
+    py-qt && \
     rm -rf /var/cache/apk/*
 
 # Start rdpy

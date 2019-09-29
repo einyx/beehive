@@ -1,5 +1,6 @@
 FROM alpine 
 
+
 RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/http\:\/\/mirror.clarkson.edu/g' /etc/apk/repositories
 # Install packages
 RUN apk -U --no-cache add \

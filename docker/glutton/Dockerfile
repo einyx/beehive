@@ -1,20 +1,22 @@
-FROM alpine
+FROM alpine 
+
+RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/http\:\/\/mirror.clarkson.edu/g' /etc/apk/repositories
 
 # Include dist
 ADD dist/ /root/dist/
-  
+
 # Setup apk
 RUN apk -U --no-cache add \
-                   build-base \
-                   git \
-                   go \
-                   g++ \
-                   iptables-dev \
-                   libnetfilter_queue-dev \
-                   libcap \
-                   libpcap-dev && \
+    build-base \
+    git \
+    go \
+    g++ \
+    iptables-dev \
+    libnetfilter_queue-dev \
+    libcap \
+    libpcap-dev && \
 
-# Setup go, glutton
+    # Setup go, glutton
     export GOPATH=/opt/go/ && \
     go get -d github.com/mushorg/glutton && \
     cd /opt/go/src/github.com/satori/ && \
@@ -33,20 +35,20 @@ RUN apk -U --no-cache add \
     setcap cap_net_admin,cap_net_raw=+ep /opt/glutton/bin/server && \
     setcap cap_net_admin,cap_net_raw=+ep /sbin/xtables-multi && \
 
-# Setup user, groups and configs
+    # Setup user, groups and configs
     addgroup -g 2000 glutton && \
     adduser -S -s /bin/ash -u 2000 -D -g 2000 glutton && \
     mkdir -p /var/log/glutton && \
     mv /root/dist/rules.yaml /opt/glutton/rules/ && \
 
-# Clean up
+    # Clean up
     apk del --purge build-base \
-                    git \
-                    go \
-                    g++ && \
+    git \
+    go \
+    g++ && \
     rm -rf /var/cache/apk/* \
-           /opt/go \
-           /root/dist
+    /opt/go \
+    /root/dist
 
 # Start glutton 
 WORKDIR /opt/glutton

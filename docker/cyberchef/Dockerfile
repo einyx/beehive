@@ -1,16 +1,18 @@
-FROM alpine
+FROM alpine 
+
+RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/http\:\/\/mirror.clarkson.edu/g' /etc/apk/repositories
 
 # Get and install dependencies & packages
 RUN apk -U --no-cache add \
-            curl \
-            git \
-            npm \
-            nodejs && \
+    curl \
+    git \
+    npm \
+    nodejs && \
     npm install -g grunt-cli && \
     npm install -g http-server && \
     npm install npm@latest -g && \
 
-# Install CyberChef 
+    # Install CyberChef 
     cd /root && \
     git clone https://github.com/gchq/cyberchef -b v8.20.0 --depth=1 && \
     chown -R nobody:nobody cyberchef && \
@@ -21,9 +23,9 @@ RUN apk -U --no-cache add \
     mv build/prod/* /opt/cyberchef && \
     cd / && \
 
-# Clean up
+    # Clean up
     apk del --purge git \
-                    npm && \
+    npm && \
     rm -rf /root/* && \
     rm -rf /var/cache/apk/*
 
