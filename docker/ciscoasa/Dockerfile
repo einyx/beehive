@@ -1,5 +1,6 @@
 FROM alpine
-RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/http\:\/\/mirror.clarkson.edu/g' /etc/apk/repositories# Include dist
+RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/https\:\/\/alpine.global.ssl.fastly.net/g' /etc/apk/repositories
+# Include dist
 ADD dist/ /root/dist/
 
 # Setup env and apt
