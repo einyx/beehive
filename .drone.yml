@@ -181,7 +181,6 @@ steps:
     network_mode: host
     custom_dns: [8.8.8.8, 9.9.9.9]
     image: plugins/docker
-    failure: ignore
     privileged: true
     settings:
       auto_tag: true
@@ -202,8 +201,7 @@ steps:
     network_mode: host
     custom_dns: [8.8.8.8, 9.9.9.9]
     image: plugins/docker
-    failure: ignore
-    privileged: true \n
+    privileged: true
     settings:
       auto_tag: true
       auto_tag_suffix: linux-amd64
@@ -223,7 +221,6 @@ steps:
     network_mode: host
     custom_dns: [8.8.8.8, 9.9.9.9]
     image: plugins/docker
-    failure: ignore
     privileged: true
     settings:
       auto_tag: true
@@ -244,7 +241,6 @@ steps:
     network_mode: host
     custom_dns: [8.8.8.8, 9.9.9.9]
     image: plugins/docker
-    failure: ignore
     privileged: true
     settings:
       auto_tag: true
@@ -265,7 +261,6 @@ steps:
     network_mode: host
     custom_dns: [8.8.8.8, 9.9.9.9]
     image: plugins/docker
-    failure: ignore
     privileged: true
     settings:
       auto_tag: true
@@ -286,7 +281,6 @@ steps:
     network_mode: host
     custom_dns: [8.8.8.8, 9.9.9.9]
     image: plugins/docker
-    failure: ignore
     privileged: true
     settings:
       auto_tag: true
@@ -307,7 +301,6 @@ steps:
     network_mode: host
     custom_dns: [8.8.8.8, 9.9.9.9]
     image: plugins/docker
-    failure: ignore
     privileged: true
     settings:
       auto_tag: true
@@ -328,7 +321,6 @@ steps:
     network_mode: host
     custom_dns: [8.8.8.8, 9.9.9.9]
     image: plugins/docker
-    failure: ignore
     privileged: true
     settings:
       auto_tag: true
@@ -349,7 +341,6 @@ steps:
     network_mode: host
     custom_dns: [8.8.8.8, 9.9.9.9]
     image: plugins/docker
-    failure: ignore
     privileged: true
     settings:
       auto_tag: true
@@ -370,7 +361,6 @@ steps:
     network_mode: host
     custom_dns: [8.8.8.8, 9.9.9.9]
     image: plugins/docker
-    failure: ignore
     privileged: true
     settings:
       auto_tag: true
@@ -391,7 +381,6 @@ steps:
     network_mode: host
     custom_dns: [8.8.8.8, 9.9.9.9]
     image: plugins/docker
-    failure: ignore
     privileged: true
     settings:
       auto_tag: true
@@ -412,7 +401,6 @@ steps:
     network_mode: host
     custom_dns: [8.8.8.8, 9.9.9.9]
     image: plugins/docker
-    failure: ignore
     privileged: true
     settings:
       auto_tag: true
