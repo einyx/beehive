@@ -45,7 +45,7 @@ RUN cd / && \
     rm -rf /opt/conpot /tmp/* /var/tmp/* && \
     # Get wireshark manuf db for scapy, setup configs, user, groups
     mkdir -p /etc/conpot /var/log/conpot /usr/share/wireshark
-RUN wget https://github.com/wireshark/wireshark/raw/master/manuf -o /usr/share/wireshark/manuf
+RUN wget https://github.com/wireshark/wireshark/raw/master/manuf -O /usr/share/wireshark/manuf
 RUN    cp /root/dist/conpot.cfg /etc/conpot/conpot.cfg
 RUN cp -R /root/dist/templates /usr/lib/python3.6/site-packages/conpot/ && \
     addgroup -g 2000 conpot && \
