@@ -57,7 +57,7 @@ steps:
       event:
         - push
         - tag
-    - name: publish_conpot
+  - name: publish_conpot
     network_mode: host
     custom_dns: [8.8.8.8, 9.9.9.9]
     image: plugins/docker
@@ -77,343 +77,343 @@ steps:
       event:
         - push
         - tag
-    - name: publish_cowrie
-      network_mode: host
-      custom_dns: [8.8.8.8, 9.9.9.9]
-      image: plugins/docker
-      privileged: true
-      settings:
-        auto_tag: true
-        auto_tag_suffix: linux-amd64
-        dockerfile: docker/cowrie/Dockerfile
-        context: docker/cowrie
-        repo: beehivesec/cowrie
-        cache_from: beehivesec/cowrie:latest
-        username:
-          from_secret: docker_username
-        password:
-          from_secret: docker_password
-      when:
-        event:
-          - push
-          - tag
-    - name: publish_cyberchef
-      network_mode: host
-      custom_dns: [8.8.8.8, 9.9.9.9]
-      image: plugins/docker
-      privileged: true
-      settings:
-        auto_tag: true
-        auto_tag_suffix: linux-amd64
-        dockerfile: docker/cyberchef/Dockerfile
-        context: docker/cyberchef
-        repo: beehivesec/cyberchef
-        cache_from: beehivesec/cyberchef:latest
-        username:
-          from_secret: docker_username
-        password:
-          from_secret: docker_password
-      when:
-        event:
-          - push
-          - tag
-    - name: publish_dionanea
-      network_mode: host
-      custom_dns: [8.8.8.8, 9.9.9.9]
-      image: plugins/docker
-      privileged: true
-      settings:
-        auto_tag: true
-        auto_tag_suffix: linux-amd64
-        dockerfile: docker/dionanea/Dockerfile
-        context: docker/dionanea
-        repo: beehivesec/dionanea
-        cache_from: beehivesec/dionanea:latest
-        username:
-          from_secret: docker_username
-        password:
-          from_secret: docker_password
-      when:
-        event:
-          - push
-          - tag
-    - name: publish_elasticpot
-      network_mode: host
-      custom_dns: [8.8.8.8, 9.9.9.9]
-      image: plugins/docker
-      privileged: true
-      settings:
-        auto_tag: true
-        auto_tag_suffix: linux-amd64
-        dockerfile: docker/elasticpot/Dockerfile
-        context: docker/elasticpot
-        repo: beehivesec/elasticpot
-        cache_from: beehivesec/elasticpot:latest
-        username:
-          from_secret: docker_username
-        password:
-          from_secret: docker_password
-      when:
-        event:
-          - push
-          - tag
-    - name: publish_ewsposter
-      network_mode: host
-      custom_dns: [8.8.8.8, 9.9.9.9]
-      image: plugins/docker
-      privileged: true
-      settings:
-        auto_tag: true
-        auto_tag_suffix: linux-amd64
-        dockerfile: docker/ewsposter/Dockerfile
-        context: docker/ewsposter
-        repo: beehivesec/ewsposter
-        cache_from: beehivesec/ewsposter:latest
-        username:
-          from_secret: docker_username
-        password:
-          from_secret: docker_password
-      when:
-        event:
-          - push
-          - tag
-    - name: publish_glastopf
-      network_mode: host
-      custom_dns: [8.8.8.8, 9.9.9.9]
-      image: plugins/docker
-      privileged: true
-      settings:
-        auto_tag: true
-        auto_tag_suffix: linux-amd64
-        dockerfile: docker/glastopf/Dockerfile
-        context: docker/glastopf
-        repo: beehivesec/glastopf
-        cache_from: beehivesec/glastopf:latest
-        username:
-          from_secret: docker_username
-        password:
-          from_secret: docker_password
-      when:
-        event:
-          - push
-          - tag
-    - name: publish_glutton
-      network_mode: host
-      custom_dns: [8.8.8.8, 9.9.9.9]
-      image: plugins/docker
-      privileged: true
-      settings:
-        auto_tag: true
-        auto_tag_suffix: linux-amd64
-        dockerfile: docker/glutton/Dockerfile
-        context: docker/glutton
-        repo: beehivesec/glutton
-        cache_from: beehivesec/glutton:latest
-        username:
-          from_secret: docker_username
-        password:
-          from_secret: docker_password
-      when:
-        event:
-          - push
-          - tag
-    - name: publish_heralding
-      network_mode: host
-      custom_dns: [8.8.8.8, 9.9.9.9]
-      image: plugins/docker
-      privileged: true
-      settings:
-        auto_tag: true
-        auto_tag_suffix: linux-amd64
-        dockerfile: docker/heralding/Dockerfile
-        context: docker/heralding
-        repo: beehivesec/heralding
-        cache_from: beehivesec/heralding:latest
-        username:
-          from_secret: docker_username
-        password:
-          from_secret: docker_password
-      when:
-        event:
-          - push
-          - tag
-    - name: publish_honeytrap
-      network_mode: host
-      custom_dns: [8.8.8.8, 9.9.9.9]
-      image: plugins/docker
-      privileged: true
-      settings:
-        auto_tag: true
-        auto_tag_suffix: linux-amd64
-        dockerfile: docker/honeytrap/Dockerfile
-        context: docker/honeytrap
-        repo: beehivesec/honeytrap
-        cache_from: beehivesec/honeytrap:latest
-        username:
-          from_secret: docker_username
-        password:
-          from_secret: docker_password
-      when:
-        event:
-          - push
-          - tag
-    - name: publish_hpfeeds
-      network_mode: host
-      custom_dns: [8.8.8.8, 9.9.9.9]
-      image: plugins/docker
-      privileged: true
-      settings:
-        auto_tag: true
-        auto_tag_suffix: linux-amd64
-        dockerfile: docker/hpfeeds/Dockerfile
-        context: docker/hpfeeds
-        repo: beehivesec/hpfeeds
-        cache_from: beehivesec/hpfeeds:latest
-        username:
-          from_secret: docker_username
-        password:
-          from_secret: docker_password
-      when:
-        event:
-          - push
-          - tag
-    - name: publish_mailoney
-      network_mode: host
-      custom_dns: [8.8.8.8, 9.9.9.9]
-      image: plugins/docker
-      privileged: true
-      settings:
-        auto_tag: true
-        auto_tag_suffix: linux-amd64
-        dockerfile: docker/mailoney/Dockerfile
-        context: docker/mailoney
-        repo: beehivesec/mailoney
-        cache_from: beehivesec/mailoney:latest
-        username:
-          from_secret: docker_username
-        password:
-          from_secret: docker_password
-      when:
-        event:
+  - name: publish_cowrie
+    network_mode: host
+    custom_dns: [8.8.8.8, 9.9.9.9]
+    image: plugins/docker
+    privileged: true
+    settings:
+      auto_tag: true
+      auto_tag_suffix: linux-amd64
+      dockerfile: docker/cowrie/Dockerfile
+      context: docker/cowrie
+      repo: beehivesec/cowrie
+      cache_from: beehivesec/cowrie:latest
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+    when:
+      event:
         - push
         - tag
-    - name: publish_medpot
-      network_mode: host
-      custom_dns: [8.8.8.8, 9.9.9.9]
-      image: plugins/docker
-      privileged: true
-      settings:
-        auto_tag: true
-        auto_tag_suffix: linux-amd64
-        dockerfile: docker/medpot/Dockerfile
-        context: docker/medpot
-        repo: beehivesec/medpot
-        cache_from: beehivesec/medpot:latest
-        username:
-          from_secret: docker_username
-        password:
-          from_secret: docker_password
-      when:
-        event:
+  - name: publish_cyberchef
+    network_mode: host
+    custom_dns: [8.8.8.8, 9.9.9.9]
+    image: plugins/docker
+    privileged: true
+    settings:
+      auto_tag: true
+      auto_tag_suffix: linux-amd64
+      dockerfile: docker/cyberchef/Dockerfile
+      context: docker/cyberchef
+      repo: beehivesec/cyberchef
+      cache_from: beehivesec/cyberchef:latest
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+    when:
+      event:
         - push
         - tag
-    - name: publish_p0f
-      network_mode: host
-      custom_dns: [8.8.8.8, 9.9.9.9]
-      image: plugins/docker
-      privileged: true
-      settings:
-        auto_tag: true
-        auto_tag_suffix: linux-amd64
-        dockerfile: docker/p0f/Dockerfile
-        context: docker/p0f
-        repo: beehivesec/p0f
-        cache_from: beehivesec/p0f:latest
-        username:
-          from_secret: docker_username
-        password:
-          from_secret: docker_password
-      when:
-        event:
+  - name: publish_dionanea
+    network_mode: host
+    custom_dns: [8.8.8.8, 9.9.9.9]
+    image: plugins/docker
+    privileged: true
+    settings:
+      auto_tag: true
+      auto_tag_suffix: linux-amd64
+      dockerfile: docker/dionanea/Dockerfile
+      context: docker/dionanea
+      repo: beehivesec/dionanea
+      cache_from: beehivesec/dionanea:latest
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+    when:
+      event:
         - push
         - tag
-    - name: publish_rdpy
-      network_mode: host
-      custom_dns: [8.8.8.8, 9.9.9.9]
-      image: plugins/docker
-      privileged: true
-      settings:
-        auto_tag: true
-        auto_tag_suffix: linux-amd64
-        dockerfile: docker/rdpy/Dockerfile
-        context: docker/rdpy
-        repo: beehivesec/rdpy
-        cache_from: beehivesec/rdpy:latest
-        username:
-          from_secret: docker_username
-        password:
-          from_secret: docker_password
-      when:
-        event:
+  - name: publish_elasticpot
+    network_mode: host
+    custom_dns: [8.8.8.8, 9.9.9.9]
+    image: plugins/docker
+    privileged: true
+    settings:
+      auto_tag: true
+      auto_tag_suffix: linux-amd64
+      dockerfile: docker/elasticpot/Dockerfile
+      context: docker/elasticpot
+      repo: beehivesec/elasticpot
+      cache_from: beehivesec/elasticpot:latest
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+    when:
+      event:
         - push
         - tag
-    - name: publish_spiderfoot
-      network_mode: host
-      custom_dns: [8.8.8.8, 9.9.9.9]
-      image: plugins/docker
-      privileged: true
-      settings:
-        auto_tag: true
-        auto_tag_suffix: linux-amd64
-        dockerfile: docker/spiderfoot/Dockerfile
-        context: docker/spiderfoot
-        repo: beehivesec/spiderfoot
-        cache_from: beehivesec/spiderfoot:latest
-        username:
-          from_secret: docker_username
-        password:
-          from_secret: docker_password
-      when:
-        event:
+  - name: publish_ewsposter
+    network_mode: host
+    custom_dns: [8.8.8.8, 9.9.9.9]
+    image: plugins/docker
+    privileged: true
+    settings:
+      auto_tag: true
+      auto_tag_suffix: linux-amd64
+      dockerfile: docker/ewsposter/Dockerfile
+      context: docker/ewsposter
+      repo: beehivesec/ewsposter
+      cache_from: beehivesec/ewsposter:latest
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+    when:
+      event:
         - push
         - tag
-    - name: publish_suricata
-      network_mode: host
-      custom_dns: [8.8.8.8, 9.9.9.9]
-      image: plugins/docker
-      privileged: true
-      settings:
-        auto_tag: true
-        auto_tag_suffix: linux-amd64
-        dockerfile: docker/suricata/Dockerfile
-        context: docker/suricata
-        repo: beehivesec/suricata
-        cache_from: beehivesec/suricata:latest
-        username:
-          from_secret: docker_username
-        password:
-          from_secret: docker_password
-      when:
-        event:
+  - name: publish_glastopf
+    network_mode: host
+    custom_dns: [8.8.8.8, 9.9.9.9]
+    image: plugins/docker
+    privileged: true
+    settings:
+      auto_tag: true
+      auto_tag_suffix: linux-amd64
+      dockerfile: docker/glastopf/Dockerfile
+      context: docker/glastopf
+      repo: beehivesec/glastopf
+      cache_from: beehivesec/glastopf:latest
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+    when:
+      event:
         - push
         - tag
-    - name: publish_tanner
-      network_mode: host
-      custom_dns: [8.8.8.8, 9.9.9.9]
-      image: plugins/docker
-      privileged: true
-      settings:
-        auto_tag: true
-        auto_tag_suffix: linux-amd64
-        dockerfile: docker/tanner/Dockerfile
-        context: docker/tanner
-        repo: beehivesec/tanner
-        cache_from: beehivesec/tanner:latest
-        username:
-          from_secret: docker_username
-        password:
-          from_secret: docker_password
-      when:
-        event:
+  - name: publish_glutton
+    network_mode: host
+    custom_dns: [8.8.8.8, 9.9.9.9]
+    image: plugins/docker
+    privileged: true
+    settings:
+      auto_tag: true
+      auto_tag_suffix: linux-amd64
+      dockerfile: docker/glutton/Dockerfile
+      context: docker/glutton
+      repo: beehivesec/glutton
+      cache_from: beehivesec/glutton:latest
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+    when:
+      event:
+        - push
+        - tag
+  - name: publish_heralding
+    network_mode: host
+    custom_dns: [8.8.8.8, 9.9.9.9]
+    image: plugins/docker
+    privileged: true
+    settings:
+      auto_tag: true
+      auto_tag_suffix: linux-amd64
+      dockerfile: docker/heralding/Dockerfile
+      context: docker/heralding
+      repo: beehivesec/heralding
+      cache_from: beehivesec/heralding:latest
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+    when:
+      event:
+        - push
+        - tag
+  - name: publish_honeytrap
+    network_mode: host
+    custom_dns: [8.8.8.8, 9.9.9.9]
+    image: plugins/docker
+    privileged: true
+    settings:
+      auto_tag: true
+      auto_tag_suffix: linux-amd64
+      dockerfile: docker/honeytrap/Dockerfile
+      context: docker/honeytrap
+      repo: beehivesec/honeytrap
+      cache_from: beehivesec/honeytrap:latest
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+    when:
+      event:
+        - push
+        - tag
+  - name: publish_hpfeeds
+    network_mode: host
+    custom_dns: [8.8.8.8, 9.9.9.9]
+    image: plugins/docker
+    privileged: true
+    settings:
+      auto_tag: true
+      auto_tag_suffix: linux-amd64
+      dockerfile: docker/hpfeeds/Dockerfile
+      context: docker/hpfeeds
+      repo: beehivesec/hpfeeds
+      cache_from: beehivesec/hpfeeds:latest
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+    when:
+      event:
+        - push
+        - tag
+  - name: publish_mailoney
+    network_mode: host
+    custom_dns: [8.8.8.8, 9.9.9.9]
+    image: plugins/docker
+    privileged: true
+    settings:
+      auto_tag: true
+      auto_tag_suffix: linux-amd64
+      dockerfile: docker/mailoney/Dockerfile
+      context: docker/mailoney
+      repo: beehivesec/mailoney
+      cache_from: beehivesec/mailoney:latest
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+    when:
+      event:
+        - push
+        - tag
+  - name: publish_medpot
+    network_mode: host
+    custom_dns: [8.8.8.8, 9.9.9.9]
+    image: plugins/docker
+    privileged: true
+    settings:
+      auto_tag: true
+      auto_tag_suffix: linux-amd64
+      dockerfile: docker/medpot/Dockerfile
+      context: docker/medpot
+      repo: beehivesec/medpot
+      cache_from: beehivesec/medpot:latest
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+    when:
+      event:
+        - push
+        - tag
+  - name: publish_p0f
+    network_mode: host
+    custom_dns: [8.8.8.8, 9.9.9.9]
+    image: plugins/docker
+    privileged: true
+    settings:
+      auto_tag: true
+      auto_tag_suffix: linux-amd64
+      dockerfile: docker/p0f/Dockerfile
+      context: docker/p0f
+      repo: beehivesec/p0f
+      cache_from: beehivesec/p0f:latest
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+    when:
+      event:
+        - push
+        - tag
+  - name: publish_rdpy
+    network_mode: host
+    custom_dns: [8.8.8.8, 9.9.9.9]
+    image: plugins/docker
+    privileged: true
+    settings:
+      auto_tag: true
+      auto_tag_suffix: linux-amd64
+      dockerfile: docker/rdpy/Dockerfile
+      context: docker/rdpy
+      repo: beehivesec/rdpy
+      cache_from: beehivesec/rdpy:latest
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+    when:
+      event:
+        - push
+        - tag
+  - name: publish_spiderfoot
+    network_mode: host
+    custom_dns: [8.8.8.8, 9.9.9.9]
+    image: plugins/docker
+    privileged: true
+    settings:
+      auto_tag: true
+      auto_tag_suffix: linux-amd64
+      dockerfile: docker/spiderfoot/Dockerfile
+      context: docker/spiderfoot
+      repo: beehivesec/spiderfoot
+      cache_from: beehivesec/spiderfoot:latest
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+    when:
+      event:
+        - push
+        - tag
+  - name: publish_suricata
+    network_mode: host
+    custom_dns: [8.8.8.8, 9.9.9.9]
+    image: plugins/docker
+    privileged: true
+    settings:
+      auto_tag: true
+      auto_tag_suffix: linux-amd64
+      dockerfile: docker/suricata/Dockerfile
+      context: docker/suricata
+      repo: beehivesec/suricata
+      cache_from: beehivesec/suricata:latest
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+    when:
+      event:
+        - push
+        - tag
+  - name: publish_tanner
+    network_mode: host
+    custom_dns: [8.8.8.8, 9.9.9.9]
+    image: plugins/docker
+    privileged: true
+    settings:
+      auto_tag: true
+      auto_tag_suffix: linux-amd64
+      dockerfile: docker/tanner/Dockerfile
+      context: docker/tanner
+      repo: beehivesec/tanner
+      cache_from: beehivesec/tanner:latest
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+    when:
+      event:
         - push
         - tag
