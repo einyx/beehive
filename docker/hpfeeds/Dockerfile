@@ -21,7 +21,7 @@ RUN apk -U --no-cache add \
     sqlite && \
 
     # Install php sandbox from git
-    git clone --depth=1 https://github.com/rep/hpfeeds /opt/hpfeeds && \
+    git clone https://github.com/rep/hpfeeds /opt/hpfeeds && \
     cd /opt/hpfeeds/broker && \
     sed -i -e '87d;88d' database.py && \
     cp /root/dist/adduser.sql . && \
