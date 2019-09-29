@@ -1,28 +1,28 @@
 FROM alpine
-
+RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/http\:\/\/mirror.clarkson.edu/g' /etc/apk/repositories
 # Include dist
 ADD dist/ /root/dist/
 
 # Setup apt
 RUN apk -U add \
-             build-base \
-             file \
-             git \
-             libev \
-             libtool \
-             libcap \
-             libxslt \
-             libxslt-dev \
-             mariadb-dev \
-             pkgconfig \
-             python3 \
-             python3-dev \
-             py-cffi \
-             py-cryptography \
-             tcpdump \
-             wget && \
+    build-base \
+    file \
+    git \
+    libev \
+    libtool \
+    libcap \
+    libxslt \
+    libxslt-dev \
+    mariadb-dev \
+    pkgconfig \
+    python3 \
+    python3-dev \
+    py-cffi \
+    py-cryptography \
+    tcpdump \
+    wget && \
 
-# Setup ConPot
+    # Setup ConPot
     git clone --depth=1 https://github.com/mushorg/conpot /opt/conpot && \
     cd /opt/conpot/ && \
     # Patch to accept ENV for MIB path
@@ -42,8 +42,8 @@ RUN apk -U add \
     cd / && \
     rm -rf /opt/conpot /tmp/* /var/tmp/* && \
     setcap cap_net_bind_service=+ep /usr/bin/python3.6 && \
-    
-# Get wireshark manuf db for scapy, setup configs, user, groups
+
+    # Get wireshark manuf db for scapy, setup configs, user, groups
     mkdir -p /etc/conpot /var/log/conpot /usr/share/wireshark && \
     wget https://github.com/wireshark/wireshark/raw/master/manuf -o /usr/share/wireshark/manuf && \
     cp /root/dist/conpot.cfg /etc/conpot/conpot.cfg && \
@@ -51,20 +51,20 @@ RUN apk -U add \
     addgroup -g 2000 conpot && \
     adduser -S -s /bin/ash -u 2000 -D -g 2000 conpot && \
 
-# Clean up
+    # Clean up
     apk del --purge \
-            build-base \
-            cython-dev \
-            file \
-            git \
-            libev \
-            libtool \
-            libxslt-dev \
-            mariadb-dev \
-            pkgconfig \
-            python3-dev \
-            py-cffi \
-            wget && \
+    build-base \
+    cython-dev \
+    file \
+    git \
+    libev \
+    libtool \
+    libxslt-dev \
+    mariadb-dev \
+    pkgconfig \
+    python3-dev \
+    py-cffi \
+    wget && \
     rm -rf /root/* && \
     rm -rf /tmp/* && \
     rm -rf /var/cache/apk/*
