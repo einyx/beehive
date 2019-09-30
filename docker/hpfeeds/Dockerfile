@@ -18,11 +18,11 @@ RUN apk -U --no-cache add \
     py-pip \
     python \
     python-dev \
-    sqlite && \
+    sqlite
 
+RUN pip install aiorun && \
     # Install php sandbox from git
     git clone https://github.com/rep/hpfeeds /opt/hpfeeds && \
-    cd /opt/hpfeeds/hpfeeds/broker && \
     cd /opt/hpfeeds/hpfeeds/scripts && python broker.py || : && \
     cp /root/dist/adduser.sql . && \
     sqlite3 db.sqlite3 < adduser.sql
