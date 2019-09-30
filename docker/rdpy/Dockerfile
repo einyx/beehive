@@ -16,8 +16,7 @@ RUN apk -U --no-cache add \
     python-dev \
     py-pip \
     py-setuptools && \
-    apk -U --no-cache add --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ \
-    py-qt && \
+    apk -U --no-cache add --repository http://mirror.clarkson.edu/alpine/edge/testing/
 
     # Setup user
     addgroup -g 2000 rdpy && \
