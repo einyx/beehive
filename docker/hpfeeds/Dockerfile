@@ -23,8 +23,8 @@ RUN apk -U --no-cache add \
     # Install php sandbox from git
     git clone https://github.com/rep/hpfeeds /opt/hpfeeds && \
     cd /opt/hpfeeds/hpfeeds/broker && \
+    cd /opt/hpfeeds/hpfeeds/scripts && python broker.py || : && \
     cp /root/dist/adduser.sql . && \
-    cd /opt/hpfeeds/hpfeeds/scripts && timeout 5 python broker.py || : && \
     sqlite3 db.sqlite3 < adduser.sql
 #python setup.py build && \
 #python setup.py install && \
