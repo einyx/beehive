@@ -6,8 +6,7 @@ RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/http\:\/\/mirror.clarkson.edu/g' 
 ADD dist/ /root/dist/
 
 # Install packages
-RUN sed -i 's/dl-cdn/dl-2/g' /etc/apk/repositories && \
-    apk -U --no-cache add \
+RUN apk -U --no-cache add \
     ca-certificates \
     curl \
     file \
@@ -60,7 +59,7 @@ RUN sed -i 's/dl-cdn/dl-2/g' /etc/apk/repositories && \
 
     # Get and build Suricata
     mkdir -p /opt/builder/ && \
-    wget https://www.openinfosecfoundation.org/download/suricata-4.1.3.tar.gz && \
+    wget http://www.openinfosecfoundation.org/download/suricata-4.1.3.tar.gz && \
     tar xvfz suricata-4.1.3.tar.gz --strip-components=1 -C /opt/builder/ && \
     rm suricata-4.1.3.tar.gz && \
     cd /opt/builder && \
