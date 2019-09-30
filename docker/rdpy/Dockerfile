@@ -19,7 +19,7 @@ RUN apk -U --no-cache add \
     apk -U --no-cache add --repository http://mirror.clarkson.edu/alpine/edge/testing/
 
     # Setup user
-    addgroup -g 2000 rdpy && \
+RUN addgroup -g 2000 rdpy && \
     adduser -S -s /bin/ash -u 2000 -D -g 2000 rdpy && \
 
     # Install deps 
