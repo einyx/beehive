@@ -17,6 +17,26 @@ name: build
 type: docker
 
 steps:
+  - name publish_elasticsearch
+      image: plugins/docker
+    privileged: true
+    network_mode: host
+    custom_dns: [8.8.8.8, 9.9.9.9]
+    settings:
+      auto_tag: true
+      auto_tag_suffix: linux-amd64
+      dockerfile: docker/elk/elasticsearch/Dockerfile
+      context: docker/elk/elasticsearch
+      repo: beehivesec/elasticsearch
+      cache_from: beehivesec/elasticsearch:linux-amd64
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+    when:
+      event:
+        - push
+        - tag
   - name: publish_adbhoney
     image: plugins/docker
     privileged: true
